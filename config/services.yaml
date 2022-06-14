@@ -1,0 +1,45 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+parameters:
+    routing.uuid: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\UI\Controller\:
+        resource: '../src/UI/Controller/'
+        tags: ['controller.service_arguments']
+
+    App\UI\Subscriber\ExceptionHandlerSubscriber:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+    
+
+    # Tag instances
+    # -------------
+    _instanceof:
+        App\Shared\Domain\Bus\Query\QueryHandler:
+            tags: ['app.query_handler']
+
+    # Tag instances
+    # -------------
+    App\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
+        arguments: [!tagged app.query_handler]
+
+    # Interfaces Definitions
+    # ----------------------
+
+    # App\Security\ApiTokenEncoder:
+    #     arguments:
+    #         - "%env(JWT_SECRET)%"
+    #         - "%env(JWT_EXPIRES_IN)%"

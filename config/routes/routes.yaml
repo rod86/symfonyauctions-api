@@ -1,0 +1,26 @@
+auctions_get_all:
+    path: /auctions
+    controller: App\UI\Controller\Auctions\GetAuctionsController
+    methods: GET
+
+auctions_get:
+    path: /auctions/{id}
+    controller: App\UI\Controller\Auctions\GetAuctionByIdController
+    methods: GET
+    requirements:
+        id: '%routing.uuid%'
+    
+auctions_create:
+    path: /auctions
+    controller: App\UI\Controller\Auctions\CreateAuctionController
+    methods: POST
+
+# user_create:
+#     path: /user
+#     controller: App\Controller\UserController::create
+#     methods: POST
+
+# user_auth:
+#     path: /auth
+#     controller: App\Controller\AuthController::index
+#     methods: POST

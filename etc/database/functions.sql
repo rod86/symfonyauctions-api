@@ -1,0 +1,14 @@
+DROP FUNCTION IF EXISTS BIN_TO_UUID;
+DROP FUNCTION IF EXISTS UUID_TO_BIN;
+
+CREATE FUNCTION BIN_TO_UUID(uuid BINARY(16)) RETURNS VARCHAR(36)
+    RETURN LOWER(CONCAT(
+        SUBSTR(HEX(uuid), 1, 8), '-',
+        SUBSTR(HEX(uuid), 9, 4), '-',
+        SUBSTR(HEX(uuid), 13, 4), '-',
+        SUBSTR(HEX(uuid), 17, 4), '-',
+        SUBSTR(HEX(uuid), 21)
+    ));
+
+CREATE FUNCTION UUID_TO_BIN(uuid CHAR(36)) RETURNS BINARY(16)
+    RETURN UNHEX(REPLACE(uuid, '-', ''));

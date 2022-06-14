@@ -1,0 +1,18 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+!.env.dist
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+
+# IDE
+.idea
+.vscode
+!.vscode/launch.json
+/nbproject/private/

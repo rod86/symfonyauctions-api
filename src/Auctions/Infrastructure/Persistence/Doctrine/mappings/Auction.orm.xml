@@ -1,0 +1,16 @@
+<doctrine-mapping>
+    <entity
+            name="App\Auctions\Domain\Auction"
+            table="auctions"
+            repository_class="App\Auctions\Infrastructure\Persistence\Doctrine\DoctrineAuctionRepository">
+        <id name="id" type="uuid" column="id" />
+        <field name="title" type="string" column="title" length="200" />
+        <field name="description" type="text" column="description" />
+        <field name="status" type="string" column="status" length="20" />
+        <field name="startPrice" type="decimal" column="start_price" precision="10" scale="2" />
+        <field name="startDate" type="datetime_immutable" column="start_date" />
+        <field name="finishDate" type="datetime_immutable" column="finish_date" />
+        <field name="createdAt" type="datetime_immutable" column="created_at" />
+        <field name="updatedAt" type="datetime_immutable" column="updated_at" />
+    </entity>
+</doctrine-mapping>

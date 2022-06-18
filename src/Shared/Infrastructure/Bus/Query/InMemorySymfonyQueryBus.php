@@ -5,26 +5,19 @@ namespace App\Shared\Infrastructure\Bus\Query;
 use App\Shared\Domain\Bus\Query\Query;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\Bus\Query\Response;
-use App\Shared\Infrastructure\Bus\Exception\QueryNotRegisteredError;
-use App\Shared\Infrastructure\Bus\GetHandlersByFirstParameter;
-use Symfony\Component\Messenger\Exception\HandlerFailedException;
-use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
-use Symfony\Component\Messenger\Handler\HandlersLocator;
-use Symfony\Component\Messenger\MessageBus;
-use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use App\Shared\Infrastructure\Bus\Exception\QueryNotRegisteredException;
+use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 
 class InMemorySymfonyQueryBus implements QueryBus
 {
-    private MessageBus $bus;
+    private MessageBusInterface $bus;
 
-    public function __construct(iterable $queryHandlers)
+    public function __construct(MessageBusInterface $queryBus)
     {
-        $this->bus = new MessageBus([
-            new HandleMessageMiddleware(
-                new HandlersLocator(GetHandlersByFirstParameter::forCallables($queryHandlers)),
-            ),
-        ]);
+        $this->bus = $queryBus;
     }
 
     public function ask(Query $query): ?Response
@@ -35,7 +28,7 @@ class InMemorySymfonyQueryBus implements QueryBus
             
             return $stamp->getResult();
         } catch (NoHandlerForMessageException $exception) {
-            throw new QueryNotRegisteredError($query);
+            throw new QueryNotRegisteredException($query);
         } catch (HandlerFailedException $exception) {
             throw $exception->getPrevious();
         }

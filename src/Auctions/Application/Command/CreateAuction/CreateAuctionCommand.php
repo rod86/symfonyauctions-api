@@ -2,7 +2,9 @@
 
 namespace App\Auctions\Application\Command\CreateAuction;
 
-final class CreateAuctionCommand
+use App\Shared\Domain\Bus\Command\Command;
+
+final class CreateAuctionCommand implements Command
 {
     private string $id;
     private string $title;

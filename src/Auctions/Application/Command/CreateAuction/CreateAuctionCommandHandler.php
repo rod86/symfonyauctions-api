@@ -4,9 +4,10 @@ namespace App\Auctions\Application\Command\CreateAuction;
 
 use App\Auctions\Domain\Auction;
 use App\Auctions\Domain\AuctionRepository;
+use App\Shared\Domain\Bus\Command\CommandHandler;
 use App\Shared\Domain\ValueObject\Uuid;
 
-final class CreateAuctionCommandHandler
+final class CreateAuctionCommandHandler implements CommandHandler
 {
     private AuctionRepository $auctionRepository;
 

@@ -29,12 +29,10 @@ services:
     # -------------
     _instanceof:
         App\Shared\Domain\Bus\Query\QueryHandler:
-            tags: ['app.query_handler']
+            tags: [{ name: messenger.message_handler, bus: query.bus }]
 
-    # Tag instances
-    # -------------
-    App\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
-        arguments: [!tagged app.query_handler]
+        App\Shared\Domain\Bus\Command\CommandHandler:
+            tags: [{ name: messenger.message_handler, bus: command.bus }]
 
     # Interfaces Definitions
     # ----------------------

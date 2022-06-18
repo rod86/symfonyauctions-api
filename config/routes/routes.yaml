@@ -15,6 +15,13 @@ auctions_create:
     controller: App\UI\Controller\Auctions\CreateAuctionController
     methods: POST
 
+auctions_update:
+    path: /auctions/{id}
+    controller: App\UI\Controller\Auctions\UpdateAuctionController
+    methods: PATCH
+    requirements:
+        id: '%routing.uuid%'
+
 # user_create:
 #     path: /user
 #     controller: App\Controller\UserController::create

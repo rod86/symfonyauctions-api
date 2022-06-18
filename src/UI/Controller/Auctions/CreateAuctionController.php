@@ -9,25 +9,17 @@ use App\UI\Request\CreateAuctionRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Auctions\Application\Command\CreateAuction\CreateAuctionCommand;
-use App\Auctions\Application\Command\CreateAuction\CreateAuctionCommandHandler;
+use App\UI\Controller\ApiController;
 
-class CreateAuctionController
+class CreateAuctionController extends ApiController
 {
-    private CreateAuctionCommandHandler $createAuctionCommandHandler;
-
-    public function __construct(
-        CreateAuctionCommandHandler $createAuctionCommandHandler
-    ) {
-        $this->createAuctionCommandHandler = $createAuctionCommandHandler;
-    }
-
     public function __invoke(CreateAuctionRequest $request): Response
     {
         $data = $request->payload();
 
         $id = Uuid::random()->value();
 
-        $this->createAuctionCommandHandler->__invoke(new CreateAuctionCommand(
+        $this->dispatch(new CreateAuctionCommand(
             $id,
             $data['title'],
             $data['description'],

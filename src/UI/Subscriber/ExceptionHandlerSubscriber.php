@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\UI\Subscriber;
 
 use App\UI\Exception\ApiException;

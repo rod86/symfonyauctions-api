@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\UI\Controller\Auctions;
 
 use App\Auctions\Application\Query\FindAuctions\FindAuctionsQuery;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Auctions\Application\Command\CreateAuction;
 
 use App\Auctions\Domain\Auction;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Auctions\Application\Query\FindAuctions;
 
 use App\Auctions\Domain\AuctionRepository;

@@ -10,12 +10,11 @@ use Doctrine\ORM\EntityRepository;
 
 abstract class DoctrineRepository
 {
-    private EntityManagerInterface $entityManager;
     private EntityRepository $repository;
 
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ) {
         $this->repository = $entityManager->getRepository($this->entityClass());
     }
 

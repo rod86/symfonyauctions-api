@@ -11,25 +11,22 @@ use App\Shared\Domain\ValueObject\Uuid;
 
 final class CreateAuctionCommandHandler implements CommandHandler
 {
-    private AuctionRepository $auctionRepository;
-
-    public function __construct(AuctionRepository $auctionRepository)
-    {
-        $this->auctionRepository = $auctionRepository;    
-    }
+    public function __construct(
+        private AuctionRepository $auctionRepository
+    ) {}
     
     public function __invoke(CreateAuctionCommand $command): void
     {
         $auction = new Auction(
-            Uuid::fromString($command->id()),
-            $command->title(),
-            $command->description(),
-            Auction::STATUS_SCHEDULED,
-            $command->startPrice(),
-            $command->startDate(),
-            $command->finishDate(),
-            $command->createdAt(),
-            $command->updatedAt()
+            id: Uuid::fromString($command->id()),
+            title: $command->title(),
+            description: $command->description(),
+            status: Auction::STATUS_SCHEDULED,
+            startPrice: $command->startPrice(),
+            startDate: $command->startDate(),
+            finishDate: $command->finishDate(),
+            createdAt: $command->createdAt(),
+            updatedAt: $command->updatedAt()
         );
 
         $this->auctionRepository->create($auction);

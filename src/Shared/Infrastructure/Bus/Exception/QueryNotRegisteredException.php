@@ -12,7 +12,7 @@ class QueryNotRegisteredException extends \Exception
     {
         $message = sprintf(
             'Query with class %s has no handler registered',
-            get_class($query)
+            $query::class
         );
 
         parent::__construct($message);

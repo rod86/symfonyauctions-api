@@ -21,7 +21,7 @@ final class Assert
             throw new InvalidArgumentException(sprintf(
                 'The object <%s> is not an instance of <%s>',
                 $class,
-                get_class($item)
+                $item::class
             ));
         }
     }

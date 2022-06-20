@@ -12,7 +12,7 @@ class CommandNotRegisteredException extends \Exception
     {
         $message = sprintf(
             'Command with class %s has no handler registered',
-            get_class($command)
+            $command::class
         );
 
         parent::__construct($message);

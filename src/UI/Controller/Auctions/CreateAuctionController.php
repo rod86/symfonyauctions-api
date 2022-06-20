@@ -22,14 +22,14 @@ class CreateAuctionController extends ApiController
         $id = Uuid::random()->value();
 
         $this->dispatch(new CreateAuctionCommand(
-            $id,
-            $data['title'],
-            $data['description'],
-            (float)$data['start_price'],
-            Utils::stringToDate($data['start_date']),
-            Utils::stringToDate($data['finish_date']),
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            id: $id,
+            title: $data['title'],
+            description: $data['description'],
+            startPrice: (float)$data['start_price'],
+            startDate: Utils::stringToDate($data['start_date']),
+            finishDate: Utils::stringToDate($data['finish_date']),
+            createdAt: new DateTimeImmutable(),
+            updatedAt: new DateTimeImmutable(),
         ));
         
         return new JsonResponse(null, Response::HTTP_CREATED);

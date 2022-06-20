@@ -13,17 +13,14 @@ use Symfony\Component\Messenger\Exception\HandlerFailedException;
 
 class InMemorySymfonyCommandBus implements CommandBus
 {
-    private MessageBusInterface $bus;
-
-    public function __construct(MessageBusInterface $commandBus)
-    {
-        $this->bus = $commandBus;
-    }
+    public function __construct(
+        private MessageBusInterface $commandBus
+    ) {}
 
     public function dispatch(Command $command): void
     {
         try {
-            $this->bus->dispatch($command);
+            $this->commandBus->dispatch($command);
         } catch (NoHandlerForMessageException $exception) {
             throw new CommandNotRegisteredException($command);
         } catch (HandlerFailedException $exception) {

@@ -15,18 +15,15 @@ use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 
 class InMemorySymfonyQueryBus implements QueryBus
 {
-    private MessageBusInterface $bus;
-
-    public function __construct(MessageBusInterface $queryBus)
-    {
-        $this->bus = $queryBus;
-    }
+    public function __construct(
+        private MessageBusInterface $queryBus
+    ) {}
 
     public function ask(Query $query): ?Response
     {
         try {
             /** @var HandledStamp $stamp */
-            $stamp = $this->bus->dispatch($query)->last(HandledStamp::class);
+            $stamp = $this->queryBus->dispatch($query)->last(HandledStamp::class);
             
             return $stamp->getResult();
         } catch (NoHandlerForMessageException $exception) {

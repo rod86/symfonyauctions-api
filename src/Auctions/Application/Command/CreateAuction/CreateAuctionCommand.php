@@ -8,34 +8,16 @@ use App\Shared\Domain\Bus\Command\Command;
 
 final class CreateAuctionCommand implements Command
 {
-    private string $id;
-    private string $title;
-    private string $description;
-    private float $startPrice;
-    private \DateTimeImmutable $startDate;
-    private \DateTimeImmutable $finishDate;
-    private \DateTimeImmutable $createdAt;
-    private \DateTimeImmutable $updatedAt;
-
     public function __construct(
-        $id,
-        string $title,
-        string $description,
-        float $startPrice,
-        \DateTimeImmutable $startDate,
-        \DateTimeImmutable $finishDate,
-        \DateTimeImmutable $createdAt,
-        \DateTimeImmutable $updatedAt
-    ) {
-        $this->id = $id;
-        $this->title = $title;
-        $this->description = $description;
-        $this->startPrice = $startPrice;
-        $this->startDate = $startDate;
-        $this->finishDate = $finishDate;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
-    }
+        private string $id,
+		private string $title,
+		private string $description,
+		private float $startPrice,
+		private \DateTimeImmutable $startDate,
+		private \DateTimeImmutable $finishDate,
+		private \DateTimeImmutable $createdAt,
+		private \DateTimeImmutable $updatedAt
+    ) {}
 
 	public function id(): string
 	{

@@ -14,16 +14,10 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 abstract class ApiController
 {
-    private QueryBus $queryBus;
-    private CommandBus $commandBus;
-
     public function __construct(
-        QueryBus $queryBus,
-        CommandBus $commandBus
-    ) {
-        $this->queryBus = $queryBus;
-        $this->commandBus = $commandBus;
-    }
+        private QueryBus $queryBus,
+        private CommandBus $commandBus
+    ) {}
 
     protected function ask(Query $query): ?Response
     {

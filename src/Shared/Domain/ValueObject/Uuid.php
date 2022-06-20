@@ -10,12 +10,10 @@ use Symfony\Component\Uid\Uuid as SymfonyUuid;
 
 final class Uuid implements Stringable
 {
-    protected string $value;
-
-    public function __construct(string $value)
-    {
+    public function __construct(
+        protected string $value
+    ) {
         $this->ensureIsValidUuid($value);
-        $this->value = $value;
     }
 
     public function equals(Uuid $other): bool

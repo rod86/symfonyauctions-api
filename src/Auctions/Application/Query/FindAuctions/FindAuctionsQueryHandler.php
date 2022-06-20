@@ -9,12 +9,9 @@ use App\Shared\Domain\Bus\Query\QueryHandler;
 
 final class FindAuctionsQueryHandler implements QueryHandler
 {
-    private AuctionRepository $auctionRepository;
-
-    public function __construct(AuctionRepository $auctionRepository)
-    {
-        $this->auctionRepository = $auctionRepository;
-    }
+    public function __construct(
+        private AuctionRepository $auctionRepository
+    ) {}
 
     public function __invoke(FindAuctionsQuery $query): FindAuctionsResponse
     {

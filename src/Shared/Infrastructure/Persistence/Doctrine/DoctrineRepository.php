@@ -40,5 +40,10 @@ abstract class DoctrineRepository
         $this->entityManager()->flush($entity);
     }
 
+    protected function updateEntity(AggregateRoot $entity): void
+    {
+        $this->entityManager()->flush($entity);
+    }
+
     abstract protected function entityClass(): string;
 }

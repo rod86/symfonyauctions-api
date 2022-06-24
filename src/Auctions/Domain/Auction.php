@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Auctions\Domain;
 
 use App\Shared\Domain\Aggregate\AggregateRoot;
+use App\Shared\Domain\Aggregate\Timestampable;
 use App\Shared\Domain\ValueObject\Uuid;
+use DateTimeImmutable;
 
 final class Auction extends AggregateRoot
 {
+    use Timestampable;
+
     const STATUS_SCHEDULED = 'scheduled';
     const STATUS_OPEN = 'open';
     const STATUS_CLOSED = 'closed';
@@ -19,11 +23,14 @@ final class Auction extends AggregateRoot
         private string $description,
         private string $status,
         private float $startPrice,
-        private \DateTimeImmutable $startDate,
-        private \DateTimeImmutable $finishDate,
-        private \DateTimeImmutable $createdAt,
-        private \DateTimeImmutable $updatedAt
-    ) {}
+        private DateTimeImmutable $startDate,
+        private DateTimeImmutable $finishDate,
+        DateTimeImmutable $createdAt,
+        DateTimeImmutable $updatedAt
+    ) {
+        $this->updateCreatedAt($createdAt);
+        $this->updateUpdatedAt($updatedAt);
+    }
 
     public function id(): Uuid
     {
@@ -60,15 +67,35 @@ final class Auction extends AggregateRoot
 		return $this->finishDate;
 	}
 
-	public function updatedAt(): \DateTimeImmutable
-	{
-		return $this->updatedAt;
-	}
+    public function updateTitle(string $title): void
+    {
+        $this->title = $title;
+    }
 
-	public function createdAt(): \DateTimeImmutable
-	{
-		return $this->createdAt;
-	}
+    public function updateDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function updateStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function updateStartPrice(float $startPrice): void
+    {
+        $this->startPrice = $startPrice;
+    }
+
+    public function updateStartDate(DateTimeImmutable $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    public function updateFinishDate(DateTimeImmutable $finishDate): void
+    {
+        $this->finishDate = $finishDate;
+    }
 
     public function toArray(): array
     {

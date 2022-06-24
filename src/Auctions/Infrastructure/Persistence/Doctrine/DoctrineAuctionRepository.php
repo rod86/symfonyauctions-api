@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Auctions\Infrastructure\Persistence\Doctrine;
 
 use App\Auctions\Domain\Auction;
-use App\Auctions\Domain\AuctionRepository;
-use App\Auctions\Domain\AuctionsCollection;
 use App\Shared\Domain\ValueObject\Uuid;
+use App\Auctions\Domain\AuctionsCollection;
+use App\Auctions\Domain\Contracts\AuctionRepository;
 use App\Shared\Infrastructure\Persistence\Doctrine\DoctrineRepository;
 
 class DoctrineAuctionRepository extends DoctrineRepository implements AuctionRepository
@@ -22,6 +22,11 @@ class DoctrineAuctionRepository extends DoctrineRepository implements AuctionRep
         $this->persist($auction);
     }
 
+    public function update(Auction $auction): void
+    {
+        $this->updateEntity($auction);
+    }
+
     public function findAllAuctions(): AuctionsCollection
     {
         $result = $this->repository()->findAll();
@@ -29,7 +34,7 @@ class DoctrineAuctionRepository extends DoctrineRepository implements AuctionRep
         return new AuctionsCollection($result);
     }
 
-    public function findOneById(Uuid $id): ?Auction
+    public function findOneById(Uuid $id): Auction|null
     {
         return $this->repository()->findOneById($id->value());
     }

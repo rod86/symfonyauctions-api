@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auctions\Application\Query\FindAuctions;
 
-use App\Auctions\Domain\Contracts\AuctionRepository;
+use App\Auctions\Domain\Contract\AuctionRepository;
 use App\Shared\Domain\Bus\Query\QueryHandler;
 
 final class FindAuctionsQueryHandler implements QueryHandler

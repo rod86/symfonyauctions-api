@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Auctions\Domain\DomainService;
 
 use App\Auctions\Domain\Auction;
-use App\Auctions\Domain\Contracts\AuctionRepository;
+use App\Auctions\Domain\Contract\AuctionRepository;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Auctions\Domain\Exception\AuctionNotFoundException;
 

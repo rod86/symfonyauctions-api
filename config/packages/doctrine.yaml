@@ -15,6 +15,12 @@ doctrine:
                 prefix: 'App\Auctions\Domain'
                 alias: App\Auctions\Domain
                 type: xml
+            User:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Users/Infrastructure/Persistence/Doctrine/mappings'
+                prefix: 'App\Users\Domain'
+                alias: App\Users\Domain
+                type: xml
 
 when@test:
     doctrine:

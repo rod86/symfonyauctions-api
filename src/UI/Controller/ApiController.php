@@ -11,12 +11,15 @@ use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\Bus\Query\Response;
 use App\UI\Exception\ApiException;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class ApiController
 {
     public function __construct(
         private QueryBus $queryBus,
-        private CommandBus $commandBus
+        private CommandBus $commandBus,
+        private TokenStorageInterface $tokenStorage,
     ) {}
 
     protected function ask(Query $query): ?Response
@@ -34,5 +37,12 @@ abstract class ApiController
         $message = $message ?? HttpResponse::$statusTexts[$statusCode] ?? ''; 
         
         throw new ApiException($statusCode, $message, $previous);
+    }
+
+    protected function getUser(): ?UserInterface
+    {
+        $token = $this->tokenStorage->getToken();
+    
+        return ($token !== null) ? $token->getUser() : null;
     }
 }

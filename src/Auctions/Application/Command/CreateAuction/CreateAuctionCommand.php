@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auctions\Application\Command\CreateAuction;
 
+use DateTimeImmutable;
 use App\Shared\Domain\Bus\Command\Command;
 
 final class CreateAuctionCommand implements Command
@@ -39,22 +40,22 @@ final class CreateAuctionCommand implements Command
 		return $this->startPrice;
 	}
 
-	public function startDate(): \DateTimeImmutable
+	public function startDate(): DateTimeImmutable
 	{
 		return $this->startDate;
 	}
 
-	public function finishDate(): \DateTimeImmutable
+	public function finishDate(): DateTimeImmutable
 	{
 		return $this->finishDate;
 	}
 
-	public function createdAt(): \DateTimeImmutable
+	public function createdAt(): DateTimeImmutable
 	{
 		return $this->createdAt;
 	}
 
-	public function updatedAt(): \DateTimeImmutable
+	public function updatedAt(): DateTimeImmutable
 	{
 		return $this->updatedAt;
 	}

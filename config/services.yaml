@@ -27,6 +27,7 @@ services:
 
     # Tag instances
     # -------------
+
     _instanceof:
         App\Shared\Domain\Bus\Query\QueryHandler:
             tags: [{ name: messenger.message_handler, bus: query.bus }]
@@ -34,10 +35,11 @@ services:
         App\Shared\Domain\Bus\Command\CommandHandler:
             tags: [{ name: messenger.message_handler, bus: command.bus }]
 
+
     # Interfaces Definitions
     # ----------------------
 
-    # App\Security\ApiTokenEncoder:
-    #     arguments:
-    #         - "%env(JWT_SECRET)%"
-    #         - "%env(JWT_EXPIRES_IN)%"
+    App\Users\Infrastructure\Security\ApiTokenEncoder\FirebaseApiTokenEncoder:
+        arguments:
+            - "%env(JWT_SECRET)%"
+            - "%env(JWT_EXPIRES_IN)%"

@@ -1,13 +1,12 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        App\Entity\User:
+        App\UI\Security\SecurityUser:
             algorithm: 'bcrypt'
     providers:
-        database_users:
-            entity:
-                class: App\Entity\User
-                property: email
+        custom_provider:
+            id: App\UI\Security\SecurityUserProvider
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -15,11 +14,9 @@ security:
         main:
             lazy: true
             stateless: true
-            # provider: database_users
-            # json_login:
-            #     check_path: user_auth
-            # custom_authenticators:
-            #     - App\Security\ApiTokenAuthenticator
+            provider: custom_provider
+            custom_authenticators:
+                - App\UI\Security\ApiTokenAuthenticator
 
 
     access_control:

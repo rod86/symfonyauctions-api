@@ -7,7 +7,7 @@ namespace App\Auctions\Infrastructure\Persistence\Doctrine;
 use App\Auctions\Domain\Auction;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Auctions\Domain\AuctionsCollection;
-use App\Auctions\Domain\Contracts\AuctionRepository;
+use App\Auctions\Domain\Contract\AuctionRepository;
 use App\Shared\Infrastructure\Persistence\Doctrine\DoctrineRepository;
 
 class DoctrineAuctionRepository extends DoctrineRepository implements AuctionRepository

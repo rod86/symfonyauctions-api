@@ -1,0 +1,13 @@
+<doctrine-mapping>
+    <entity
+            name="App\Users\Domain\User"
+            table="users"
+            repository_class="App\Users\Infrastructure\Persistence\Doctrine\DoctrineUserRepository">
+        <id name="id" type="uuid" column="id" />
+        <field name="username" type="string" length="60" unique="true" />
+        <field name="email" type="string" length="255" unique="true" />
+        <field name="password" type="string" />
+        <field name="createdAt" type="datetime_immutable" column="created_at" />
+        <field name="updatedAt" type="datetime_immutable" column="updated_at" />
+    </entity>
+</doctrine-mapping>

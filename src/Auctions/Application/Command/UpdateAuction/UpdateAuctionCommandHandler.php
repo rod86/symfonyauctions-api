@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auctions\Application\Command\UpdateAuction;
 
-use App\Auctions\Domain\Contracts\AuctionRepository;
+use App\Auctions\Domain\Contract\AuctionRepository;
 use App\Auctions\Domain\DomainService\FindAuctionById;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use App\Shared\Domain\ValueObject\Uuid;

@@ -108,7 +108,6 @@ final class Auction extends AggregateRoot
     {
         return [
             'id' => $this->id->value(),
-            'user_id' => $this->user->id()->value(),
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->status,
@@ -117,6 +116,7 @@ final class Auction extends AggregateRoot
             'finish_date' => $this->finishDate,
             'created_at' => $this->createdAt,
             'updated_at' => $this->updatedAt,
+            'user' => $this->user->toArray(),
         ];
     }
 }

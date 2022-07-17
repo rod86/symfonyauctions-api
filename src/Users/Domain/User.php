@@ -49,7 +49,7 @@ class User extends AggregateRoot
     {
         return [
             'id' => $this->id->value(),
-            'username' => $this->title,
+            'username' => $this->username,
             'email' => $this->email,
             'created_at' => $this->createdAt,
             'updated_at' => $this->updatedAt,

@@ -7,6 +7,7 @@ namespace App\Auctions\Domain;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\Aggregate\Timestampable;
 use App\Shared\Domain\ValueObject\Uuid;
+use App\Users\Domain\User;
 use DateTimeImmutable;
 
 final class Auction extends AggregateRoot
@@ -19,6 +20,7 @@ final class Auction extends AggregateRoot
 
     public function __construct(
         private Uuid $id,
+        private User $user,
         private string $title,
         private string $description,
         private string $status,
@@ -35,6 +37,11 @@ final class Auction extends AggregateRoot
     public function id(): Uuid
     {
         return $this->id;
+    }
+
+    public function user(): User
+    {
+        return $this->user;
     }
 
     public function title(): string
@@ -101,6 +108,7 @@ final class Auction extends AggregateRoot
     {
         return [
             'id' => $this->id->value(),
+            'user_id' => $this->user->id()->value(),
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->status,

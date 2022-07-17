@@ -10,9 +10,9 @@ use App\Shared\Domain\Bus\Query\Query;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\Bus\Query\Response;
 use App\UI\Exception\ApiException;
+use App\UI\Security\SecurityUser;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class ApiController
 {
@@ -39,7 +39,7 @@ abstract class ApiController
         throw new ApiException($statusCode, $message, $previous);
     }
 
-    protected function getUser(): ?UserInterface
+    protected function getUser(): SecurityUser
     {
         $token = $this->tokenStorage->getToken();
     

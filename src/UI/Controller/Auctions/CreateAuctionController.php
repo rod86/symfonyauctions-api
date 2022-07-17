@@ -20,9 +20,11 @@ class CreateAuctionController extends ApiController
         $data = $request->payload();
 
         $id = Uuid::random()->value();
+        $userId = $this->getUser()->getId();
 
         $this->dispatch(new CreateAuctionCommand(
             id: $id,
+            userId: $userId,
             title: $data['title'],
             description: $data['description'],
             startPrice: (float)$data['start_price'],

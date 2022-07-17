@@ -20,7 +20,7 @@ security:
 
 
     access_control:
-        #- { path: ^/auctions, methods: [POST], roles: ROLE_USER }
+        - { path: ^/auctions, methods: [POST], roles: ROLE_USER }
 
 when@test:
     security:

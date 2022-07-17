@@ -11,6 +11,7 @@ final class CreateAuctionCommand implements Command
 {
     public function __construct(
         private string $id,
+		private string $userId,
 		private string $title,
 		private string $description,
 		private float $startPrice,
@@ -23,6 +24,11 @@ final class CreateAuctionCommand implements Command
 	public function id(): string
 	{
 		return $this->id;
+	}
+
+	public function userId(): string
+	{
+		return $this->userId;
 	}
 
     public function title(): string

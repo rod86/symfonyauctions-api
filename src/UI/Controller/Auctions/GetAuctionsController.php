@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\UI\Controller\ApiController;
 
-class GetAuctionsController extends ApiController
+final class GetAuctionsController extends ApiController
 {
     public function __invoke(): Response
     {

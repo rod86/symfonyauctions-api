@@ -13,7 +13,7 @@ use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class SignUpController extends ApiController
+final class SignUpController extends ApiController
 {
     public function __invoke(SignUpRequest $request): Response
     {

@@ -6,7 +6,7 @@ namespace App\Auctions\Application\Query\FindAuctionById;
 
 use App\Shared\Domain\Bus\Query\Response;
 
-class FindAuctionByIdResponse implements Response
+final class FindAuctionByIdResponse implements Response
 {
     public function __construct(
         private array $data

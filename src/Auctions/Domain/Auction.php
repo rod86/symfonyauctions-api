@@ -9,14 +9,22 @@ use App\Shared\Domain\Aggregate\Timestampable;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Users\Domain\User;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-final class Auction extends AggregateRoot
+class Auction extends AggregateRoot
 {
     use Timestampable;
 
-    const STATUS_SCHEDULED = 'scheduled';
+    const STATUS_DRAFT = 'draft';
+    const STATUS_ACTIVE = 'active';
     const STATUS_OPEN = 'open';
     const STATUS_CLOSED = 'closed';
+
+    /**
+     * @var ArrayCollection|AuctionBid[]
+     */
+    private Collection $bids;
 
     public function __construct(
         private Uuid $id,
@@ -24,12 +32,13 @@ final class Auction extends AggregateRoot
         private string $title,
         private string $description,
         private string $status,
-        private float $startPrice,
-        private DateTimeImmutable $startDate,
-        private DateTimeImmutable $finishDate,
+        private float $initialAmount,
+        private ?AuctionBid $winningBid = null,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt
     ) {
+        $this->bids = new ArrayCollection();
+
         $this->updateCreatedAt($createdAt);
         $this->updateUpdatedAt($updatedAt);
     }
@@ -44,6 +53,11 @@ final class Auction extends AggregateRoot
         return $this->user;
     }
 
+    public function bids(): Collection
+    {
+        return $this->bids;
+    }
+
     public function title(): string
     {
         return $this->title;
@@ -54,25 +68,25 @@ final class Auction extends AggregateRoot
         return $this->description;
     }
 
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
 	public function status(): string
 	{
 		return $this->status;
 	}
 
-	public function startPrice(): float
+	public function initialAmount(): float
 	{
-		return $this->startPrice;
+		return $this->initialAmount;
 	}
 
-	public function startDate(): \DateTimeImmutable
-	{
-		return $this->startDate;
-	}
-
-	public function finishDate(): \DateTimeImmutable
-	{
-		return $this->finishDate;
-	}
+    public function winningBid(): ?AuctionBid
+    {
+        return $this->winningBid;
+    }
 
     public function updateTitle(string $title): void
     {
@@ -89,20 +103,25 @@ final class Auction extends AggregateRoot
         $this->status = $status;
     }
 
-    public function updateStartPrice(float $startPrice): void
+    public function updateInitialAmount(float $initialAmount): void
     {
-        $this->startPrice = $startPrice;
+        $this->initialAmount = $initialAmount;
     }
 
-    public function updateStartDate(DateTimeImmutable $startDate): void
+    public function updateWinningBid(?AuctionBid $winningBid): void
     {
-        $this->startDate = $startDate;
+        $this->winningBid = $winningBid;
     }
 
-    public function updateFinishDate(DateTimeImmutable $finishDate): void
+    public function addBid(AuctionBid $bid): void 
     {
-        $this->finishDate = $finishDate;
+        $this->bids->add($bid);
     }
+
+    public function acceptsBids(): bool 
+    {
+        return $this->status === self::STATUS_OPEN;
+    } 
 
     public function toArray(): array
     {
@@ -111,9 +130,7 @@ final class Auction extends AggregateRoot
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->status,
-            'start_price' => $this->startPrice,
-            'start_date' => $this->startDate,
-            'finish_date' => $this->finishDate,
+            'initial_amount' => $this->initialAmount,
             'created_at' => $this->createdAt,
             'updated_at' => $this->updatedAt,
             'user' => $this->user->toArray(),

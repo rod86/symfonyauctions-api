@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Auctions\Application\Command\CreateAuction\CreateAuctionCommand;
 use App\UI\Controller\ApiController;
 
-class CreateAuctionController extends ApiController
+final class CreateAuctionController extends ApiController
 {
     public function __invoke(CreateAuctionRequest $request): Response
     {
@@ -27,9 +27,7 @@ class CreateAuctionController extends ApiController
             userId: $userId,
             title: $data['title'],
             description: $data['description'],
-            startPrice: (float)$data['start_price'],
-            startDate: Utils::stringToDate($data['start_date']),
-            finishDate: Utils::stringToDate($data['finish_date']),
+            initialAmount: (float)$data['initial_amount'],
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
         ));

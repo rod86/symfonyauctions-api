@@ -8,7 +8,7 @@ use App\Auctions\Domain\DomainService\FindAuctionById;
 use App\Shared\Domain\Bus\Query\QueryHandler;
 use App\Shared\Domain\ValueObject\Uuid;
 
-class FindAuctionByIdQueryHandler implements QueryHandler
+final class FindAuctionByIdQueryHandler implements QueryHandler
 {
     public function __construct(
         private FindAuctionById $findAuctionById

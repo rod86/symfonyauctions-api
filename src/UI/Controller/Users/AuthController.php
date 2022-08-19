@@ -12,7 +12,7 @@ use App\Users\Domain\Exception\UserNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthController extends ApiController
+final class AuthController extends ApiController
 {
     public function __invoke(AuthRequest $request): Response
     {

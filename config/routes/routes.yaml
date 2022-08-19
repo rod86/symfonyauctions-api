@@ -24,6 +24,12 @@ auctions_update:
     requirements:
         id: '%routing.uuid%'
 
+# BIDS
+auction_bid_create:
+    path: /bid
+    controller: App\UI\Controller\Auctions\CreateBidController
+    methods: POST
+
 # USERS
 user_signup:
     path: /users

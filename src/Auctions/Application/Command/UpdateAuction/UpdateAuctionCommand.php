@@ -6,15 +6,13 @@ namespace App\Auctions\Application\Command\UpdateAuction;
 
 use App\Shared\Domain\Bus\Command\Command;
 
-class UpdateAuctionCommand implements Command
+final class UpdateAuctionCommand implements Command
 {
     public function __construct(
         private string $id,
 		private string $title,
 		private string $description,
-		private float $startPrice,
-		private \DateTimeImmutable $startDate,
-		private \DateTimeImmutable $finishDate,
+		private float $initialAmount,
 		private \DateTimeImmutable $updatedAt
     ) {}
 
@@ -33,19 +31,14 @@ class UpdateAuctionCommand implements Command
 		return $this->description;
 	}
 
-	public function startPrice(): float
+	public function initialAmount(): float
 	{
-		return $this->startPrice;
+		return $this->initialAmount;
 	}
 
 	public function startDate(): \DateTimeImmutable
 	{
 		return $this->startDate;
-	}
-
-	public function finishDate(): \DateTimeImmutable
-	{
-		return $this->finishDate;
 	}
 
 	public function updatedAt(): \DateTimeImmutable

@@ -7,14 +7,16 @@
         <field name="title" type="string" column="title" length="200" />
         <field name="description" type="text" column="description" />
         <field name="status" type="string" column="status" length="20" />
-        <field name="startPrice" type="decimal" column="start_price" precision="10" scale="2" />
-        <field name="startDate" type="datetime_immutable" column="start_date" />
-        <field name="finishDate" type="datetime_immutable" column="finish_date" />
+        <field name="initialAmount" type="decimal" column="initial_amount" precision="10" scale="2" />
         <field name="createdAt" type="datetime_immutable" column="created_at" />
         <field name="updatedAt" type="datetime_immutable" column="updated_at" />
 
         <many-to-one field="user" target-entity="App\Users\Domain\User">
             <join-column name="user_id" referenced-column-name="id" />
         </many-to-one>
+        <one-to-many field="bids" target-entity="App\Auctions\Domain\AuctionBid" mapped-by="auction" />
+        <one-to-one field="winningBid" target-entity="App\Auctions\Domain\AuctionBid">
+            <join-column name="winning_bid_id" referenced-column-name="id" />
+        </one-to-one>
     </entity>
 </doctrine-mapping>

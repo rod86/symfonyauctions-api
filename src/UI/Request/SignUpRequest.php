@@ -7,7 +7,7 @@ namespace App\UI\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class SignUpRequest extends AbstractRequest
+final class SignUpRequest extends AbstractRequest
 {
     protected function validationRules(): Assert\Collection
     {

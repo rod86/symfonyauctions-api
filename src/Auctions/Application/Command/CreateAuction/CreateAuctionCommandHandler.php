@@ -26,10 +26,9 @@ final class CreateAuctionCommandHandler implements CommandHandler
             user: $user,
             title: $command->title(),
             description: $command->description(),
-            status: Auction::STATUS_SCHEDULED,
-            startPrice: $command->startPrice(),
-            startDate: $command->startDate(),
-            finishDate: $command->finishDate(),
+            status: Auction::STATUS_DRAFT,
+            initialAmount: $command->initialAmount(),
+            winningBid: null,
             createdAt: $command->createdAt(),
             updatedAt: $command->updatedAt()
         );

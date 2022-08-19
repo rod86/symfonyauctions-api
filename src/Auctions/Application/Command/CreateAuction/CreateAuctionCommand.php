@@ -14,11 +14,9 @@ final class CreateAuctionCommand implements Command
 		private string $userId,
 		private string $title,
 		private string $description,
-		private float $startPrice,
-		private \DateTimeImmutable $startDate,
-		private \DateTimeImmutable $finishDate,
-		private \DateTimeImmutable $createdAt,
-		private \DateTimeImmutable $updatedAt
+		private float $initialAmount,
+		private DateTimeImmutable $createdAt,
+		private DateTimeImmutable $updatedAt
     ) {}
 
 	public function id(): string
@@ -41,19 +39,9 @@ final class CreateAuctionCommand implements Command
 		return $this->description;
 	}
 
-	public function startPrice(): float
+	public function initialAmount(): float
 	{
-		return $this->startPrice;
-	}
-
-	public function startDate(): DateTimeImmutable
-	{
-		return $this->startDate;
-	}
-
-	public function finishDate(): DateTimeImmutable
-	{
-		return $this->finishDate;
+		return $this->initialAmount;
 	}
 
 	public function createdAt(): DateTimeImmutable

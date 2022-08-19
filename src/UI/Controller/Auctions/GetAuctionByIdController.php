@@ -10,7 +10,7 @@ use App\UI\Controller\ApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class GetAuctionByIdController extends ApiController
+final class GetAuctionByIdController extends ApiController
 {
     public function __invoke(string $id)
     {

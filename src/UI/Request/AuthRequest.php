@@ -6,7 +6,7 @@ namespace App\UI\Request;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class AuthRequest extends AbstractRequest
+final class AuthRequest extends AbstractRequest
 {
     protected function validationRules(): Assert\Collection
     {

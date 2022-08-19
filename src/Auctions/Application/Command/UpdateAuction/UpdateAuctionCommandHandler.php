@@ -9,7 +9,7 @@ use App\Auctions\Domain\DomainService\FindAuctionById;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use App\Shared\Domain\ValueObject\Uuid;
 
-class UpdateAuctionCommandHandler implements CommandHandler
+final class UpdateAuctionCommandHandler implements CommandHandler
 {
     public function __construct(
         private FindAuctionById $findAuctionById,
@@ -24,9 +24,7 @@ class UpdateAuctionCommandHandler implements CommandHandler
 
         $auction->updateTitle($command->title());
         $auction->updateDescription($command->description());
-        $auction->updateStartPrice($command->startPrice());
-        $auction->updateStartDate($command->startDate());
-        $auction->updateFinishDate($command->finishDate());
+        $auction->updateInitialAmount($command->initialAmount());
         $auction->updateUpdatedAt($command->updatedAt());
 
         $this->auctionRepository->update($auction);

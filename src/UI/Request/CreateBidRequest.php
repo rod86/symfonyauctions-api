@@ -6,16 +6,16 @@ namespace App\UI\Request;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class CreateAuctionRequest extends AbstractRequest
+final class CreateBidRequest extends AbstractRequest
 {
     protected function validationRules(): Assert\Collection
     {
         return new Assert\Collection([
-            'title' => new Assert\NotBlank(),
-            'description' => [
-                new Assert\NotBlank()
+            'auction_id' => [
+                new Assert\NotBlank(),
+                new Assert\Uuid()
             ],
-            'initial_amount' => [
+            'amount' => [
                 new Assert\NotBlank(),
                 new Assert\Type('numeric'),
             ],

@@ -6,7 +6,7 @@ namespace App\Auctions\Application\Query\FindAuctionById;
 
 use App\Shared\Domain\Bus\Query\Query;
 
-class FindAuctionByIdQuery implements Query
+final class FindAuctionByIdQuery implements Query
 {
     public function __construct(
         private string $id

@@ -25,6 +25,7 @@ final class UpdateAuctionCommandHandler implements CommandHandler
         $auction->updateTitle($command->title());
         $auction->updateDescription($command->description());
         $auction->updateInitialAmount($command->initialAmount());
+        $auction->updateStatus($command->status());
         $auction->updateUpdatedAt($command->updatedAt());
 
         $this->auctionRepository->update($auction);

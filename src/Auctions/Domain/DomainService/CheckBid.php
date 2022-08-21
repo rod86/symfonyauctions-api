@@ -19,8 +19,8 @@ final class CheckBid
         $auction = $bid->auction();
         $latestBid = $this->findLatestBidByAuction->__invoke($auction->id());
 
-        if (!$auction->acceptsBids()) {
-            throw new AuctionNotAcceptBidsException('Auction cannot accept bids');
+        if (!$auction->isOpen()) {
+            throw new AuctionNotAcceptBidsException('Auction is not open and cannot accept bids');
         }
 
         if ($bid->user()->id() === $auction->user()->id()) {

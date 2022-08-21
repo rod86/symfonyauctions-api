@@ -13,6 +13,7 @@ final class UpdateAuctionCommand implements Command
 		private string $title,
 		private string $description,
 		private float $initialAmount,
+		private string $status,
 		private \DateTimeImmutable $updatedAt
     ) {}
 
@@ -34,6 +35,11 @@ final class UpdateAuctionCommand implements Command
 	public function initialAmount(): float
 	{
 		return $this->initialAmount;
+	}
+
+	public function status(): string
+	{
+		return $this->status;
 	}
 
 	public function startDate(): \DateTimeImmutable

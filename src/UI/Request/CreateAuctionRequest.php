@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Request;
 
+use App\Auctions\Domain\Auction;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class CreateAuctionRequest extends AbstractRequest
@@ -19,6 +20,15 @@ final class CreateAuctionRequest extends AbstractRequest
                 new Assert\NotBlank(),
                 new Assert\Type('numeric'),
             ],
+            'status' => [
+                new Assert\NotBlank(),
+                new Assert\Choice([
+                    'choices' => [
+                        Auction::STATUS_DRAFT,
+                        Auction::STATUS_ENABLED    
+                    ]
+                ])
+            ]
         ]);
     }
 }

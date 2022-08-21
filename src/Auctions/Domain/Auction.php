@@ -17,8 +17,7 @@ class Auction extends AggregateRoot
     use Timestampable;
 
     const STATUS_DRAFT = 'draft';
-    const STATUS_ACTIVE = 'active';
-    const STATUS_OPEN = 'open';
+    const STATUS_ENABLED = 'enabled';
     const STATUS_CLOSED = 'closed';
 
     /**
@@ -118,9 +117,9 @@ class Auction extends AggregateRoot
         $this->bids->add($bid);
     }
 
-    public function acceptsBids(): bool 
+    public function isOpen(): bool 
     {
-        return $this->status === self::STATUS_OPEN;
+        return $this->status === self::STATUS_ENABLED;
     } 
 
     public function toArray(): array

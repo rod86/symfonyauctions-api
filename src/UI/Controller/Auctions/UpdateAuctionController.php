@@ -23,6 +23,7 @@ final class UpdateAuctionController extends ApiController
             title: $data['title'],
             description: $data['description'],
             initialAmount: (float)$data['initial_amount'],
+            status: $data['status'],
             updatedAt: new DateTimeImmutable(),
         ));
 

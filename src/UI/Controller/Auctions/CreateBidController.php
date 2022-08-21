@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Auctions\Application\Command\CreateBid\CreateBidCommand;
 use App\Auctions\Domain\Exception\AuctionNotAcceptBidsException;
+use App\Auctions\Domain\Exception\AuctionNotFoundException;
 use App\Auctions\Domain\Exception\InvalidBidException;
 
 final class CreateBidController extends ApiController
@@ -31,15 +32,25 @@ final class CreateBidController extends ApiController
                 createdAt: new DateTimeImmutable(),
                 updatedAt: new DateTimeImmutable(),
             ));
-        } catch (AuctionNotAcceptBidsException|InvalidBidException $e) {
+        } catch (AuctionNotFoundException $exception) {
+            $this->throwApiException(
+                Response::HTTP_NOT_FOUND,
+                sprintf(
+                    'Auction with id "%s" not found',
+                    $data['auction_id']
+                ),
+                $exception 
+            );
+        } catch (AuctionNotAcceptBidsException|InvalidBidException $exception) {
             $this->throwApiException(
                 Response::HTTP_PRECONDITION_FAILED,
-                $e->getMessage()
+                $exception->getMessage()
             );
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             $this->throwApiException(
                 Response::HTTP_INTERNAL_SERVER_ERROR, 
-                'An error ocurred while creating the bid'
+                'An error ocurred while creating the bid',
+                $exception
             );
         }
 

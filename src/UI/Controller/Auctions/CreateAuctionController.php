@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\UI\Controller\Auctions;
 
-use App\Shared\Utils;
 use DateTimeImmutable;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\UI\Request\CreateAuctionRequest;
@@ -28,6 +27,7 @@ final class CreateAuctionController extends ApiController
             title: $data['title'],
             description: $data['description'],
             initialAmount: (float)$data['initial_amount'],
+            status: $data['status'],
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
         ));

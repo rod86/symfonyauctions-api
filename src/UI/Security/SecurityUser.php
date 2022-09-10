@@ -10,8 +10,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class SecurityUser implements UserInterface
 {
     public function __construct(
-        private string $id,
-        private string $userIdentifier,
+        private readonly string $id,
+        private readonly string $userIdentifier,
     ) {}
 
     public function getId(): string

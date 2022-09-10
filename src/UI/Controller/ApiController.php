@@ -17,9 +17,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 abstract class ApiController
 {
     public function __construct(
-        private QueryBus $queryBus,
-        private CommandBus $commandBus,
-        private TokenStorageInterface $tokenStorage,
+        private readonly QueryBus $queryBus,
+        private readonly CommandBus $commandBus,
+        private readonly TokenStorageInterface $tokenStorage,
     ) {}
 
     protected function ask(Query $query): ?Response
@@ -39,7 +39,7 @@ abstract class ApiController
         throw new ApiException($statusCode, $message, $previous);
     }
 
-    protected function getUser(): SecurityUser
+    protected function getUser(): ?SecurityUser
     {
         $token = $this->tokenStorage->getToken();
     

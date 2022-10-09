@@ -20,9 +20,7 @@ class Auction extends AggregateRoot
     const STATUS_ENABLED = 'enabled';
     const STATUS_CLOSED = 'closed';
 
-    /**
-     * @var ArrayCollection|AuctionBid[]
-     */
+    /** @var Collection|ArrayCollection */
     private Collection $bids;
 
     public function __construct(

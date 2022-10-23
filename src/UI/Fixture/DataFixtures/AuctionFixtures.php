@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Fixtures\DataFixtures;
+namespace App\UI\Fixture\DataFixtures;
 
 use App\Auctions\Domain\Auction;
-use App\Fixtures\Factory\AuctionFactory;
+use App\UI\Fixture\Factory\AuctionFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Fixtures\Factory;
+namespace App\UI\Fixture\Factory;
 
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Users\Domain\User;

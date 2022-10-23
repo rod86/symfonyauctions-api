@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Fixtures\DataFixtures;
+namespace App\UI\Fixture\DataFixtures;
 
 use App\Auctions\Domain\Auction;
 use App\Auctions\Domain\AuctionBid;
-use App\Fixtures\Factory\AuctionBidFactory;
+use App\UI\Fixture\Factory\AuctionBidFactory;
+use DateInterval;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use DateInterval;
 
 final class AuctionBidFixtures extends Fixture implements DependentFixtureInterface
 {

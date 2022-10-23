@@ -43,3 +43,6 @@ services:
         arguments:
             - "%env(JWT_SECRET)%"
             - "%env(JWT_EXPIRES_IN)%"
+
+    # Services
+    # ----------------------

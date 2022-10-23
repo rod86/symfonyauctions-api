@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Fixtures\Factory;
+namespace App\UI\Fixture\Factory;
 
 use Faker;
 use TypeError;

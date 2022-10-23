@@ -1,5 +1,0 @@
-
-services:
-    App\Fixtures\DataFixtures\:
-        resource: '../fixtures/DataFixtures/'
-        tags: [ 'doctrine.fixture.orm' ]

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Fixtures\DataFixtures;
+namespace App\UI\Fixture\DataFixtures;
 
-use App\Fixtures\Factory\UserFactory;
-use Doctrine\Persistence\ObjectManager;
+use App\UI\Fixture\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
 
 final class UserFixtures extends Fixture
 {

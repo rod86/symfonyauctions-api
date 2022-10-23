@@ -19,7 +19,7 @@ final class AuctionFactory extends ModelFactory
     {
         return [
             'id' => Uuid::random(),
-            'user' => UserFactory::new()->create(),
+            'user' => UserFactory::new()->createOne(),
             'title' => $this->faker()->text(100),
             'description' => $this->faker()->paragraph(),
             'status' => $this->faker()->randomElement([
@@ -27,7 +27,7 @@ final class AuctionFactory extends ModelFactory
                 Auction::STATUS_CLOSED,
                 Auction::STATUS_ENABLED
             ]),
-            'initialAmount' => $this->faker()->randomFloat(2, 1),
+            'initialAmount' => $this->faker()->randomFloat(2, 1, 10000),
             'winningBid' => null,
             'createdAt' => DateTimeImmutable::createFromMutable($this->faker()->dateTimeBetween('-1 year')),
             'updatedAt' => DateTimeImmutable::createFromMutable($this->faker()->dateTimeBetween('-1 year'))

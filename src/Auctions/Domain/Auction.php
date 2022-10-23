@@ -30,9 +30,9 @@ class Auction extends AggregateRoot
         private string $description,
         private string $status,
         private float $initialAmount,
-        private ?AuctionBid $winningBid = null,
         DateTimeImmutable $createdAt,
-        DateTimeImmutable $updatedAt
+        DateTimeImmutable $updatedAt,
+        private ?AuctionBid $winningBid = null
     ) {
         $this->bids = new ArrayCollection();
 

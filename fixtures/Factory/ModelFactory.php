@@ -26,7 +26,7 @@ abstract class ModelFactory
         return new static($faker);
     }
 
-    final public function create(array $attributes = []): object
+    final public function createOne(array $attributes = []): object
     {
         $attributes = array_merge($this->getDefaultAttributes(), $attributes);
         $modelClass = $this->getModelClass();
@@ -51,7 +51,7 @@ abstract class ModelFactory
         $collection = [];
 
         for ($i = 0; $i < $number; $i++) {
-            $collection[] = $this->create($attributes);
+            $collection[] = $this->createOne($attributes);
         }
 
         return $collection;
@@ -71,8 +71,8 @@ abstract class ModelFactory
         }
 
         $collection = [];
-        foreach ($sequence as $attributes) {
-            $collection[] = $this->create($attributes);
+        foreach ($sequence as $key => $attributes) {
+            $collection[$key] = $this->createOne($attributes);
         }
 
         return $collection;

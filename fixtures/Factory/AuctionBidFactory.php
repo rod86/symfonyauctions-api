@@ -19,8 +19,8 @@ final class AuctionBidFactory extends ModelFactory
     {
         return [
             'id' => Uuid::random(),
-            'auction' => AuctionFactory::new()->create(),
-            'user' => UserFactory::new()->create(),
+            'auction' => AuctionFactory::new()->createOne(),
+            'user' => UserFactory::new()->createOne(),
             'amount' => $this->faker()->randomFloat(2, 1),
             'createdAt' => DateTimeImmutable::createFromMutable($this->faker()->dateTimeBetween('-1 year')),
             'updatedAt' => DateTimeImmutable::createFromMutable($this->faker()->dateTimeBetween('-1 year'))

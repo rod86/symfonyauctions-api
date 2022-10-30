@@ -15,8 +15,5 @@
             <join-column name="user_id" referenced-column-name="id" />
         </many-to-one>
         <one-to-many field="bids" target-entity="App\Auctions\Domain\AuctionBid" mapped-by="auction" />
-        <one-to-one field="winningBid" target-entity="App\Auctions\Domain\AuctionBid">
-            <join-column name="winning_bid_id" referenced-column-name="id" />
-        </one-to-one>
     </entity>
 </doctrine-mapping>

@@ -6,14 +6,15 @@ namespace App\Auctions\Application\Command\UpdateAuction;
 
 use App\Auctions\Domain\Contract\AuctionRepository;
 use App\Auctions\Domain\DomainService\FindAuctionById;
+use App\Auctions\Domain\Exception\AuctionNotFoundException;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use App\Shared\Domain\ValueObject\Uuid;
 
 final class UpdateAuctionCommandHandler implements CommandHandler
 {
     public function __construct(
-        private FindAuctionById $findAuctionById,
-        private AuctionRepository $auctionRepository
+        private readonly FindAuctionById $findAuctionById,
+        private readonly AuctionRepository $auctionRepository
     ) {}
 
     public function __invoke(UpdateAuctionCommand $command): void
@@ -21,6 +22,10 @@ final class UpdateAuctionCommandHandler implements CommandHandler
         $auction = $this->findAuctionById->__invoke(
             Uuid::fromString($command->id())
         );
+
+        if (!$auction->user()->id()->equals(Uuid::fromString($command->userId()))) {
+            throw new AuctionNotFoundException();
+        }
 
         $auction->updateTitle($command->title());
         $auction->updateDescription($command->description());

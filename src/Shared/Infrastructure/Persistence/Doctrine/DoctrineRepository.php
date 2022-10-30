@@ -12,7 +12,7 @@ abstract class DoctrineRepository
     private EntityRepository $repository;
 
     public function __construct(
-        private EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager
     ) {
         $this->repository = $entityManager->getRepository($this->entityClass());
     }

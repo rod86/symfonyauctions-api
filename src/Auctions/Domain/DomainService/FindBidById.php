@@ -6,16 +6,23 @@ namespace App\Auctions\Domain\DomainService;
 
 use App\Auctions\Domain\AuctionBid;
 use App\Auctions\Domain\Contract\BidRepository;
+use App\Auctions\Domain\Exception\AuctionBidNotFoundException;
 use App\Shared\Domain\ValueObject\Uuid;
 
-final class FindLatestBidByAuction
+final class FindBidById
 {
     public function __construct(
         private readonly BidRepository $bidRepository
     ) {}
 
-    public function __invoke(Uuid $auctionId): ?AuctionBid
+    public function __invoke(Uuid $id): AuctionBid
     {
-        return $this->bidRepository->findLatestBidByAuctionId($auctionId);
+        $bid = $this->bidRepository->findOneById($id);
+
+        if ($bid === null) {
+            throw new AuctionBidNotFoundException();
+        }
+
+        return $bid;
     }
 }

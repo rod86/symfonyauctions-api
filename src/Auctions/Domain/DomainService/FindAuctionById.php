@@ -12,7 +12,7 @@ use App\Auctions\Domain\Exception\AuctionNotFoundException;
 final class FindAuctionById
 {
     public function __construct(
-       private AuctionRepository $auctionRepository
+       private readonly AuctionRepository $auctionRepository
     ) {}
 
     public function __invoke(Uuid $id): Auction
@@ -20,7 +20,7 @@ final class FindAuctionById
         $auction = $this->auctionRepository->findOneById($id);
 
         if ($auction === null) {
-            throw new AuctionNotFoundException($id->value());
+            throw new AuctionNotFoundException();
         }
 
         return $auction;

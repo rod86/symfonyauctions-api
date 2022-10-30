@@ -9,12 +9,13 @@ use App\Shared\Domain\Bus\Command\Command;
 final class UpdateAuctionCommand implements Command
 {
     public function __construct(
-        private string $id,
-		private string $title,
-		private string $description,
-		private float $initialAmount,
-		private string $status,
-		private \DateTimeImmutable $updatedAt
+        private readonly string $id,
+		private readonly string $title,
+		private readonly string $description,
+		private readonly float $initialAmount,
+		private readonly string $status,
+        private readonly string $userId,
+		private readonly \DateTimeImmutable $updatedAt
     ) {}
 
 	public function id(): string
@@ -42,10 +43,10 @@ final class UpdateAuctionCommand implements Command
 		return $this->status;
 	}
 
-	public function startDate(): \DateTimeImmutable
-	{
-		return $this->startDate;
-	}
+    public function userId(): string
+    {
+        return $this->userId;
+    }
 
 	public function updatedAt(): \DateTimeImmutable
 	{

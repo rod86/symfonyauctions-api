@@ -21,6 +21,11 @@ class DoctrineBidRepository extends DoctrineRepository implements BidRepository
         $this->persist($bid);
     }
 
+    public function update(AuctionBid $bid): void
+    {
+        $this->updateEntity($bid);
+    }
+
     public function findLatestBidByAuctionId(Uuid $auctionId): AuctionBid|null
     {   
         return $this->repository()->createQueryBuilder('b')
@@ -30,5 +35,10 @@ class DoctrineBidRepository extends DoctrineRepository implements BidRepository
             ->setParameter('auction', $auctionId, 'uuid')
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findOneById(Uuid $id): AuctionBid|null
+    {
+        return $this->repository()->findOneById($id->value());
     }
 }

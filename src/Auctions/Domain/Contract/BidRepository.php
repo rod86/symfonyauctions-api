@@ -11,5 +11,9 @@ interface BidRepository
 {
     public function create(AuctionBid $bid): void;
 
+    public function update(AuctionBid $bid): void;
+
     public function findLatestBidByAuctionId(Uuid $auctionId): AuctionBid|null;
+
+    public function findOneById(Uuid $id): AuctionBid|null;
 }

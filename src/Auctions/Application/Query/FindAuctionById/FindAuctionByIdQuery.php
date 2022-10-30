@@ -9,7 +9,7 @@ use App\Shared\Domain\Bus\Query\Query;
 final class FindAuctionByIdQuery implements Query
 {
     public function __construct(
-        private string $id
+        private readonly string $id
     ) {}
 
     public function id(): string

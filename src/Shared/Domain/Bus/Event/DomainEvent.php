@@ -10,18 +10,18 @@ use DateTimeImmutable;
 
 abstract class DomainEvent
 {
-    private string $aggregateId;
-    private string $eventId;
-    private string $ocurredOn;
+    private readonly string $aggregateId;
+    private readonly string $eventId;
+    private readonly string $occurredOn;
 
     public function __construct(
         string $aggregateId,
         string $eventId = null,
-        string $ocurredOn = null
+        string $occurredOn = null
     ) {
         $this->aggregateId = $aggregateId;
         $this->eventId = $eventId ?: Uuid::random()->value();
-        $this->ocurredOn = $ocurredOn ?: Utils::dateToString(new DateTimeImmutable());
+        $this->occurredOn = $occurredOn ?: Utils::dateToString(new DateTimeImmutable());
     }
 
     public function aggregateId(): string
@@ -34,8 +34,8 @@ abstract class DomainEvent
         return $this->eventId;
     }
 
-    public function ocurredOn(): string
+    public function occurredOn(): string
     {
-        return $this->ocurredOn;
+        return $this->occurredOn;
     }
 }

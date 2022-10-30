@@ -10,14 +10,14 @@ use App\Shared\Domain\Bus\Command\Command;
 final class CreateAuctionCommand implements Command
 {
     public function __construct(
-        private string $id,
-		private string $userId,
-		private string $title,
-		private string $description,
-		private float $initialAmount,
-		private string $status,
-		private DateTimeImmutable $createdAt,
-		private DateTimeImmutable $updatedAt
+        private readonly string $id,
+		private readonly string $userId,
+		private readonly string $title,
+		private readonly string $description,
+		private readonly float $initialAmount,
+		private readonly string $status,
+		private readonly DateTimeImmutable $createdAt,
+		private readonly DateTimeImmutable $updatedAt
     ) {}
 
 	public function id(): string

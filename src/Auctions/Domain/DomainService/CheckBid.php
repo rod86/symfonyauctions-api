@@ -11,7 +11,7 @@ use App\Auctions\Domain\Exception\InvalidBidException;
 final class CheckBid
 {
     public function __construct(
-        private FindLatestBidByAuction $findLatestBidByAuction
+        private readonly FindLatestBidByAuction $findLatestBidByAuction
     ) {}
 
     public function __invoke(AuctionBid $bid): void
@@ -20,7 +20,7 @@ final class CheckBid
         $latestBid = $this->findLatestBidByAuction->__invoke($auction->id());
 
         if (!$auction->isOpen()) {
-            throw new AuctionNotAcceptBidsException('Auction is not open and cannot accept bids');
+            throw new AuctionNotAcceptBidsException();
         }
 
         if ($bid->user()->id() === $auction->user()->id()) {

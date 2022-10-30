@@ -14,7 +14,7 @@ use Symfony\Component\Messenger\Exception\HandlerFailedException;
 class InMemorySymfonyCommandBus implements CommandBus
 {
     public function __construct(
-        private MessageBusInterface $commandBus
+        private readonly MessageBusInterface $commandBus
     ) {}
 
     public function dispatch(Command $command): void

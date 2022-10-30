@@ -12,7 +12,7 @@ use App\Users\Domain\Exception\UserNotFoundException;
 final class FindUserById
 {
     public function __construct(
-        private UserRepository $userRepository
+        private readonly UserRepository $userRepository
     ) {}
 
     public function __invoke(Uuid $id): User

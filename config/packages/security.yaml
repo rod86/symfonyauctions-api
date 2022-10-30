@@ -21,7 +21,8 @@ security:
 
     access_control:
         - { path: ^/auctions, methods: [POST], roles: ROLE_USER }
-        - { path: ^/auctions/%routing.uuid%, methods: [PUT], roles: ROLE_USER }
+        - { path: ^/auctions/%routing.uuid%$, methods: [PUT], roles: ROLE_USER }
+        - { path: ^/auctions/%routing.uuid%/close$, methods: [PUT], roles: ROLE_USER }
         - { path: ^/bid, methods: [POST], roles: ROLE_USER }
 
 when@test:

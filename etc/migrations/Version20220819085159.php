@@ -19,11 +19,13 @@ final class Version20220819085159 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+
         $this->addSql('CREATE TABLE auction_bids (
           id BINARY(16) NOT NULL,
           auction_id BINARY(16) DEFAULT NULL,
           user_id BINARY(16) DEFAULT NULL,
           amount NUMERIC(10, 2) NOT NULL,
+          is_winner TINYINT(1) DEFAULT 0 NOT NULL,
           created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\',
           updated_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\',
           INDEX IDX_F49BC5BD57B8F0DE (auction_id),
@@ -38,10 +40,8 @@ final class Version20220819085159 extends AbstractMigration
           description LONGTEXT NOT NULL,
           status VARCHAR(20) NOT NULL,
           initial_amount NUMERIC(10, 2) NOT NULL,
-          winning_bid_id BINARY(16) DEFAULT NULL,
           created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\',
           updated_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\',
-          UNIQUE INDEX UNIQ_72D6E9005E0430B7 (winning_bid_id),
           INDEX IDX_72D6E900A76ED395 (user_id),
           PRIMARY KEY(id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -71,18 +71,12 @@ final class Version20220819085159 extends AbstractMigration
         $this->addSql('ALTER TABLE
           auctions
         ADD
-          CONSTRAINT FK_72D6E9005E0430B7 FOREIGN KEY (winning_bid_id) REFERENCES auction_bids (id)');
-        
-        $this->addSql('ALTER TABLE
-          auctions
-        ADD
           CONSTRAINT FK_72D6E900A76ED395 FOREIGN KEY (user_id) REFERENCES users (id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE auctions DROP FOREIGN KEY FK_72D6E9005E0430B7');
         $this->addSql('ALTER TABLE auction_bids DROP FOREIGN KEY FK_F49BC5BD57B8F0DE');
         $this->addSql('ALTER TABLE auction_bids DROP FOREIGN KEY FK_F49BC5BDA76ED395');
         $this->addSql('ALTER TABLE auctions DROP FOREIGN KEY FK_72D6E900A76ED395');

@@ -10,12 +10,12 @@ use DateTimeImmutable;
 class SignUpCommand implements Command
 {
     public function __construct(
-        private string $id,
-        private string $username,
-        private string $email,
-        private string $plainPassword,
-        private DateTimeImmutable $createdAt,
-        private DateTimeImmutable $updatedAt,
+        private readonly string $id,
+        private readonly string $username,
+        private readonly string $email,
+        private readonly string $plainPassword,
+        private readonly DateTimeImmutable $createdAt,
+        private readonly DateTimeImmutable $updatedAt,
     ) {}
 
     public function id(): string

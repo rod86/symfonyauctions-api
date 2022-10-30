@@ -24,6 +24,13 @@ auctions_update:
     requirements:
         id: '%routing.uuid%'
 
+auctions_close:
+    path: /auctions/{id}/close
+    controller: App\UI\Controller\Auctions\CloseAuctionController
+    methods: PUT
+    requirements:
+        id: '%routing.uuid%'
+
 # BIDS
 auction_bid_create:
     path: /bid

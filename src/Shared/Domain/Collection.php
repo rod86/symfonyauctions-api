@@ -14,7 +14,7 @@ use function Lambdish\Phunctional\map;
 abstract class Collection implements Countable, IteratorAggregate
 {
     public function __construct(
-        private array $items
+        private readonly array $items
     ) {
         Assert::arrayOf($this->type(), $items);
     }

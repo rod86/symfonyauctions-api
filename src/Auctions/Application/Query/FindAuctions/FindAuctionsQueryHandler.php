@@ -10,7 +10,7 @@ use App\Shared\Domain\Bus\Query\QueryHandler;
 final class FindAuctionsQueryHandler implements QueryHandler
 {
     public function __construct(
-        private AuctionRepository $auctionRepository
+        private readonly AuctionRepository $auctionRepository
     ) {}
 
     public function __invoke(FindAuctionsQuery $query): FindAuctionsResponse

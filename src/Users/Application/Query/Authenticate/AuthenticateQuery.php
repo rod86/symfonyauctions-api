@@ -9,8 +9,8 @@ use App\Shared\Domain\Bus\Query\Query;
 class AuthenticateQuery implements Query
 {
     public function __construct(
-        private string $username,
-        private string $plainPassword,
+        private readonly string $username,
+        private readonly string $plainPassword,
     ) {}
 
     public function username(): string

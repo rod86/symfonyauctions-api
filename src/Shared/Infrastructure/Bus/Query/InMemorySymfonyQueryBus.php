@@ -16,7 +16,7 @@ use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 class InMemorySymfonyQueryBus implements QueryBus
 {
     public function __construct(
-        private MessageBusInterface $queryBus
+        private readonly MessageBusInterface $queryBus
     ) {}
 
     public function ask(Query $query): ?Response

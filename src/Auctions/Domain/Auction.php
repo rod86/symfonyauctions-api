@@ -20,7 +20,7 @@ class Auction extends AggregateRoot
     const STATUS_ENABLED = 'enabled';
     const STATUS_CLOSED = 'closed';
 
-    /** @var Collection|ArrayCollection */
+    /** @var Collection */
     private Collection $bids;
 
     public function __construct(
@@ -31,8 +31,7 @@ class Auction extends AggregateRoot
         private string $status,
         private float $initialAmount,
         DateTimeImmutable $createdAt,
-        DateTimeImmutable $updatedAt,
-        private ?AuctionBid $winningBid = null
+        DateTimeImmutable $updatedAt
     ) {
         $this->bids = new ArrayCollection();
 
@@ -65,11 +64,6 @@ class Auction extends AggregateRoot
         return $this->description;
     }
 
-    public function isActive(): bool
-    {
-        return $this->isActive;
-    }
-
 	public function status(): string
 	{
 		return $this->status;
@@ -79,11 +73,6 @@ class Auction extends AggregateRoot
 	{
 		return $this->initialAmount;
 	}
-
-    public function winningBid(): ?AuctionBid
-    {
-        return $this->winningBid;
-    }
 
     public function updateTitle(string $title): void
     {
@@ -105,20 +94,18 @@ class Auction extends AggregateRoot
         $this->initialAmount = $initialAmount;
     }
 
-    public function updateWinningBid(?AuctionBid $winningBid): void
-    {
-        $this->winningBid = $winningBid;
-    }
-
-    public function addBid(AuctionBid $bid): void 
-    {
-        $this->bids->add($bid);
-    }
-
-    public function isOpen(): bool 
+    public function isOpen(): bool
     {
         return $this->status === self::STATUS_ENABLED;
-    } 
+    }
+
+    public function winningBid(): ?AuctionBid
+    {
+        $bid = $this->bids->filter(
+            fn(AuctionBid $item) => $item->isWinner()
+        )->first();
+        return ($bid !== false) ? $bid : null;
+    }
 
     public function toArray(): array
     {

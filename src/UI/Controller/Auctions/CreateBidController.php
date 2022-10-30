@@ -26,8 +26,8 @@ final class CreateBidController extends ApiController
         try {
             $this->dispatch(new CreateBidCommand(
                 id: Uuid::random()->value(),
-                auctionId: $data['auction_id'],
                 userId: $userId,
+                auctionId: $data['auction_id'],
                 amount: $data['amount'],
                 createdAt: new DateTimeImmutable(),
                 updatedAt: new DateTimeImmutable(),

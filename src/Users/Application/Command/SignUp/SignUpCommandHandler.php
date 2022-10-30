@@ -14,8 +14,8 @@ use App\Users\Domain\User;
 class SignUpCommandHandler implements CommandHandler
 {
     public function __construct(
-        private UserRepository $userRepository,
-        private PasswordHasher $passwordHasher,
+        private readonly UserRepository $userRepository,
+        private readonly PasswordHasher $passwordHasher,
     ) {}
 
     public function __invoke(SignUpCommand $command): void

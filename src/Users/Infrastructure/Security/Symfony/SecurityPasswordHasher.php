@@ -12,7 +12,7 @@ use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 class SecurityPasswordHasher implements PasswordHasher
 {
     public function __construct(
-        private PasswordHasherFactoryInterface $passwordHasherFactory   
+        private readonly PasswordHasherFactoryInterface $passwordHasherFactory
     ) {}
 
     public function hash(string $plainPassword): string

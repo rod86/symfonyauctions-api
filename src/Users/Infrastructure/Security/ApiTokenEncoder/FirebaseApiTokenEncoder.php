@@ -13,8 +13,8 @@ final class FirebaseApiTokenEncoder implements ApiTokenEncoder
     private const JWT_ALGORITHM = 'HS256';
 
     public function __construct(
-        private string $jwtSecret, 
-        private int $expiresIn
+        private readonly string $jwtSecret,
+        private readonly int $expiresIn
     ) {}
 
     public function encode(array $payload): string

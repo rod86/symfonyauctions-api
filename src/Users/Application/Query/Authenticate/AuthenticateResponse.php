@@ -9,7 +9,7 @@ use App\Shared\Domain\Bus\Query\Response;
 class AuthenticateResponse implements Response
 {
     public function __construct(
-        private array $data
+        private readonly array $data
     ) {}
 
     public function data(): array

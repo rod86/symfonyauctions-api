@@ -15,10 +15,10 @@ use App\Users\Domain\DomainService\FindUserById;
 final class CreateBidCommandHandler implements CommandHandler
 {
     public function __construct(
-        private FindUserById $findUserById,
-        private FindAuctionById $findAuctionById,
-        private CheckBid $checkBid,
-        private BidRepository $bidRepository,
+        private readonly FindUserById $findUserById,
+        private readonly FindAuctionById $findAuctionById,
+        private readonly CheckBid $checkBid,
+        private readonly BidRepository $bidRepository,
     ) {}
 
     public function __invoke(CreateBidCommand $command): void

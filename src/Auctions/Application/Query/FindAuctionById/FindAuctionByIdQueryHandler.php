@@ -11,7 +11,7 @@ use App\Shared\Domain\ValueObject\Uuid;
 final class FindAuctionByIdQueryHandler implements QueryHandler
 {
     public function __construct(
-        private FindAuctionById $findAuctionById
+        private readonly FindAuctionById $findAuctionById
     ) {}
 
     public function __invoke(FindAuctionByIdQuery $query): FindAuctionByIdResponse

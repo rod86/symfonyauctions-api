@@ -15,9 +15,9 @@ use App\Users\Application\Query\Authenticate\AuthenticateQuery;
 class AuthenticateQueryHandler implements QueryHandler
 {
     public function __construct(
-        private UserRepository $userRepository,
-        private PasswordHasher $passwordHasher,
-        private ApiTokenEncoder $apiTokenEncoder
+        private readonly UserRepository $userRepository,
+        private readonly PasswordHasher $passwordHasher,
+        private readonly ApiTokenEncoder $apiTokenEncoder
     ) {}
 
     public function __invoke(AuthenticateQuery $query): AuthenticateResponse

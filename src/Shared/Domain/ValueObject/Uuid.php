@@ -11,7 +11,7 @@ use Symfony\Component\Uid\Uuid as SymfonyUuid;
 final class Uuid implements Stringable
 {
     public function __construct(
-        protected string $value
+        protected readonly string $value
     ) {
         $this->ensureIsValidUuid($value);
     }
@@ -34,7 +34,7 @@ final class Uuid implements Stringable
     private function ensureIsValidUuid(string $id): void
     {
         if (!SymfonyUuid::isValid($id)) {
-            throw new InvalidArgumentException(sprintf('<%s> does not allow the value <%s>.', static::class, $id));
+            throw new InvalidArgumentException(sprintf('<%s> does not allow the value <%s>.', Uuid::class, $id));
         }
     }
 

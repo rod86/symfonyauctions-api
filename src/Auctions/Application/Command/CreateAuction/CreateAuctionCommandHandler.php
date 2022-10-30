@@ -13,8 +13,8 @@ use App\Users\Domain\DomainService\FindUserById;
 final class CreateAuctionCommandHandler implements CommandHandler
 {
     public function __construct(
-        private AuctionRepository $auctionRepository,
-        private FindUserById $findUserById
+        private readonly AuctionRepository $auctionRepository,
+        private readonly FindUserById      $findUserById
     ) {}
     
     public function __invoke(CreateAuctionCommand $command): void
@@ -28,7 +28,6 @@ final class CreateAuctionCommandHandler implements CommandHandler
             description: $command->description(),
             status: $command->status(),
             initialAmount: $command->initialAmount(),
-            winningBid: null,
             createdAt: $command->createdAt(),
             updatedAt: $command->updatedAt()
         );

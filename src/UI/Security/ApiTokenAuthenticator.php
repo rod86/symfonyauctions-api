@@ -21,8 +21,8 @@ use App\Users\Domain\Contract\ApiTokenEncoder;
 class ApiTokenAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
-        private ApiTokenEncoder $apiTokenEncoder,
-        private UserRepository $userRepository
+        private readonly ApiTokenEncoder $apiTokenEncoder,
+        private readonly UserRepository $userRepository
     ) {}
 
     public function supports(Request $request): ?bool

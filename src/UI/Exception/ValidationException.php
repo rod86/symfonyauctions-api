@@ -8,11 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ValidationException extends ApiException
 {
-    private $errors = [];
+    private array $errors = [];
 
     public function __construct(array $errors = [])
     {
         $this->errors = $errors;
+
         parent::__construct(
             Response::HTTP_PRECONDITION_FAILED,
             'Invalid request data.',

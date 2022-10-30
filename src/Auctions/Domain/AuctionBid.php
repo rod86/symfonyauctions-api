@@ -19,7 +19,8 @@ class AuctionBid
         private User $user,
         private float $amount,
         DateTimeImmutable $createdAt,
-        DateTimeImmutable $updatedAt  
+        DateTimeImmutable $updatedAt,
+        private bool $isWinner = false,
     ) {
         $this->updateCreatedAt($createdAt);
         $this->updateUpdatedAt($updatedAt);
@@ -45,11 +46,22 @@ class AuctionBid
         return $this->amount;
     }
 
+    public function isWinner(): bool
+    {
+        return $this->isWinner;
+    }
+
+    public function updateIsWinner(bool $value): void
+    {
+        $this->isWinner = $value;
+    }
+
     public function toArray(): array
     {
         return [
             'id' => $this->id->value(),
             'amount' => $this->amount,
+            'is_winner' => $this->isWinner,
             'created_at' => $this->createdAt,
             'updated_at' => $this->updatedAt,
             'auction' => $this->auction->id()->value(),

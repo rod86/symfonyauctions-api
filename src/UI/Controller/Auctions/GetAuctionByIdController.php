@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class GetAuctionByIdController extends ApiController
 {
-    public function __invoke(string $id)
+    public function __invoke(string $id): Response
     {
         try {
             $response = $this->ask(new FindAuctionByIdQuery($id));

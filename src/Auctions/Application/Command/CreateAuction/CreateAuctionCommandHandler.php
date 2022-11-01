@@ -21,7 +21,7 @@ final class CreateAuctionCommandHandler implements CommandHandler
     {
         $user = $this->findUserById->__invoke(Uuid::fromString($command->userId()));
 
-        $auction = new Auction(
+        $auction = Auction::create(
             id: Uuid::fromString($command->id()),
             user: $user,
             title: $command->title(),

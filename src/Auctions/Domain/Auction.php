@@ -24,8 +24,8 @@ class Auction extends AggregateRoot
     private Collection $bids;
 
     public function __construct(
-        private Uuid $id,
-        private User $user,
+        private readonly Uuid $id,
+        private readonly User $user,
         private string $title,
         private string $description,
         private string $status,
@@ -37,6 +37,28 @@ class Auction extends AggregateRoot
 
         $this->updateCreatedAt($createdAt);
         $this->updateUpdatedAt($updatedAt);
+    }
+
+    public static function create(
+        Uuid $id,
+        User $user,
+        string $title,
+        string $description,
+        string $status,
+        float $initialAmount,
+        DateTimeImmutable $createdAt,
+        DateTimeImmutable $updatedAt
+    ): self {
+        return new self(
+            id: $id,
+            user: $user,
+            title: $title,
+            description: $description,
+            status: $status,
+            initialAmount: $initialAmount,
+            createdAt: $createdAt,
+            updatedAt: $updatedAt
+        );
     }
 
     public function id(): Uuid
@@ -118,6 +140,7 @@ class Auction extends AggregateRoot
             'created_at' => $this->createdAt,
             'updated_at' => $this->updatedAt,
             'user' => $this->user->toArray(),
+            'bids' => array_map(fn($item) => $item->toArray(), $this->bids->toArray())
         ];
     }
 }

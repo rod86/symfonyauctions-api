@@ -14,6 +14,10 @@
         <many-to-one field="user" target-entity="App\Users\Domain\User">
             <join-column name="user_id" referenced-column-name="id" />
         </many-to-one>
-        <one-to-many field="bids" target-entity="App\Auctions\Domain\AuctionBid" mapped-by="auction" />
+        <one-to-many field="bids" target-entity="App\Auctions\Domain\AuctionBid" mapped-by="auction">
+            <order-by>
+                <order-by-field name="createdAt" direction="DESC" />
+            </order-by>
+        </one-to-many>
     </entity>
 </doctrine-mapping>

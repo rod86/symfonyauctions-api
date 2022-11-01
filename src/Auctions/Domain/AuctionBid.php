@@ -14,16 +14,36 @@ class AuctionBid
     use Timestampable;
 
     public function __construct(
-        private Uuid $id,
-        private Auction $auction,
-        private User $user,
-        private float $amount,
+        private readonly Uuid $id,
+        private readonly Auction $auction,
+        private readonly User $user,
+        private readonly float $amount,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt,
         private bool $isWinner = false,
     ) {
         $this->updateCreatedAt($createdAt);
         $this->updateUpdatedAt($updatedAt);
+    }
+
+    public static function create(
+        Uuid $id,
+        Auction $auction,
+        User $user,
+        float $amount,
+        DateTimeImmutable $createdAt,
+        DateTimeImmutable $updatedAt,
+        bool $isWinner = false,
+    ): self {
+        return new self(
+            id: $id,
+            auction: $auction,
+            user: $user,
+            amount: $amount,
+            createdAt: $createdAt,
+            updatedAt: $updatedAt,
+            isWinner: $isWinner
+        );
     }
 
     public function id(): Uuid

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Auctions\Application\Command\CreateBid;
 
 use App\Auctions\Domain\AuctionBid;
-use App\Auctions\Domain\Contract\BidRepository;
+use App\Auctions\Domain\Contract\AuctionRepository;
 use App\Auctions\Domain\DomainService\CheckBid;
 use App\Auctions\Domain\DomainService\FindAuctionById;
 use App\Shared\Domain\Bus\Command\CommandHandler;
@@ -18,7 +18,7 @@ final class CreateBidCommandHandler implements CommandHandler
         private readonly FindUserById $findUserById,
         private readonly FindAuctionById $findAuctionById,
         private readonly CheckBid $checkBid,
-        private readonly BidRepository $bidRepository,
+        private readonly AuctionRepository $auctionRepository
     ) {}
 
     public function __invoke(CreateBidCommand $command): void
@@ -38,7 +38,8 @@ final class CreateBidCommandHandler implements CommandHandler
 
         $this->checkBid->__invoke($bid);
 
-        $this->bidRepository->create($bid);
+        $auction->addBid($bid);
+        $this->auctionRepository->update($auction);
 
         // TODO event to notify all auction users that bidded
     }

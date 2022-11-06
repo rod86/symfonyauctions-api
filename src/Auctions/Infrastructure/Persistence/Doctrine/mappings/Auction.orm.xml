@@ -18,6 +18,9 @@
             <order-by>
                 <order-by-field name="createdAt" direction="DESC" />
             </order-by>
+            <cascade>
+                <cascade-all />
+            </cascade>
         </one-to-many>
     </entity>
 </doctrine-mapping>

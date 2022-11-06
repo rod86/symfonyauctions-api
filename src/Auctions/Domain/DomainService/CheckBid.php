@@ -10,14 +10,10 @@ use App\Auctions\Domain\Exception\InvalidBidException;
 
 final class CheckBid
 {
-    public function __construct(
-        private readonly FindLatestBidByAuction $findLatestBidByAuction
-    ) {}
-
     public function __invoke(AuctionBid $bid): void
     {
         $auction = $bid->auction();
-        $latestBid = $this->findLatestBidByAuction->__invoke($auction->id());
+        $lastBid = $bid->auction()->getLastBid();
 
         if (!$auction->isOpen()) {
             throw new AuctionNotAcceptBidsException();
@@ -27,7 +23,11 @@ final class CheckBid
             throw new InvalidBidException('Auctioneer cannot bid');
         }
 
-        $latestAmount = $latestBid ? $latestBid->amount() : $auction->initialAmount();
+        if ($lastBid && $lastBid->user()->id()->equals($bid->user()->id())) {
+            throw new InvalidBidException('User cannot bid after himself');
+        }
+
+        $latestAmount = $lastBid ? $lastBid->amount() : $auction->initialAmount();
 
         if ($latestAmount >= $bid->amount()) {
             throw new InvalidBidException('Invalid bid amount');

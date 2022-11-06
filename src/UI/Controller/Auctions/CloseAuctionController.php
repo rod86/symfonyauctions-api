@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Controller\Auctions;
 
 use App\Auctions\Application\Command\CloseAuction\CloseAuctionCommand;
-use App\Auctions\Domain\Exception\AuctionBidNotFoundException;
+use App\Auctions\Domain\Exception\BidNotInAuctionException;
 use App\Auctions\Domain\Exception\AuctionNotFoundException;
 use App\Auctions\Domain\Exception\InvalidAuctionStatusException;
 use App\Auctions\Domain\Exception\InvalidBidException;
@@ -37,7 +37,7 @@ final class CloseAuctionController extends ApiController
                 ),
                 $exception
             );
-        } catch (AuctionBidNotFoundException $exception) {
+        } catch (BidNotInAuctionException $exception) {
             $this->throwApiException(
                 Response::HTTP_NOT_FOUND,
                 sprintf(

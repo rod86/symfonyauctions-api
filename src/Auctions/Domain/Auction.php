@@ -71,11 +71,6 @@ class Auction extends AggregateRoot
         return $this->user;
     }
 
-    public function bids(): Collection
-    {
-        return $this->bids;
-    }
-
     public function title(): string
     {
         return $this->title;
@@ -119,6 +114,45 @@ class Auction extends AggregateRoot
     public function isOpen(): bool
     {
         return $this->status === self::STATUS_ENABLED;
+    }
+
+    public function bids(): Collection
+    {
+        return $this->bids;
+    }
+
+    public function addBid(AuctionBid $bid): void
+    {
+        $this->bids->add($bid);
+    }
+
+    public function getBidById(Uuid $id): ?AuctionBid
+    {
+        /** @var AuctionBid $item */
+        foreach ($this->bids as $item) {
+            if ($item->id()->equals($id)) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
+    public function getLastBid(): ?AuctionBid
+    {
+        $bid = $this->bids->first();
+        return ($bid !== false) ? $bid : null;
+    }
+
+    public function updateWinningBid(Uuid $id): void
+    {
+        $bid = $this->getBidById($id);
+
+        if (!$bid) {
+            return;
+        }
+
+        $bid->updateIsWinner(true);
     }
 
     public function winningBid(): ?AuctionBid

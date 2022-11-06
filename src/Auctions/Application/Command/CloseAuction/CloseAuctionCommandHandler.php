@@ -19,8 +19,6 @@ final class CloseAuctionCommandHandler implements CommandHandler
 {
     public function __construct(
         private readonly FindAuctionById $findAuctionById,
-        private readonly FindBidById $findBidById,
-        private readonly BidRepository $bidRepository,
         private readonly AuctionRepository $auctionRepository
     ) {}
 
@@ -34,9 +32,7 @@ final class CloseAuctionCommandHandler implements CommandHandler
             throw new AuctionNotFoundException();
         }
 
-        $bid = $this->findBidById->__invoke(
-            Uuid::fromString($command->bidId())
-        );
+        $bid = $auction->getBidById(Uuid::fromString($command->bidId()));
 
         if ($auction->id() !== $bid->auction()->id()) {
             throw new InvalidBidException('Bid doesnt belong to auction');
@@ -52,6 +48,5 @@ final class CloseAuctionCommandHandler implements CommandHandler
         $bid->updateUpdatedAt($command->closedAt());
 
         $this->auctionRepository->update($auction);
-        $this->bidRepository->update($bid);
     }
 }

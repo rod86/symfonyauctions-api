@@ -24,7 +24,7 @@ class DoctrineAuctionRepository extends DoctrineRepository implements AuctionRep
 
     public function update(Auction $auction): void
     {
-        $this->updateEntity($auction);
+        $this->updateEntity();
     }
 
     public function findAllAuctions(): AuctionsCollection

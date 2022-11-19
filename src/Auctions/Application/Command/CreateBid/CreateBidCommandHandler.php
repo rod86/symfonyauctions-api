@@ -9,6 +9,7 @@ use App\Auctions\Domain\Contract\AuctionRepository;
 use App\Auctions\Domain\DomainService\CheckBid;
 use App\Auctions\Domain\DomainService\FindAuctionById;
 use App\Shared\Domain\Bus\Command\CommandHandler;
+use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Users\Domain\DomainService\FindUserById;
 
@@ -18,7 +19,8 @@ final class CreateBidCommandHandler implements CommandHandler
         private readonly FindUserById $findUserById,
         private readonly FindAuctionById $findAuctionById,
         private readonly CheckBid $checkBid,
-        private readonly AuctionRepository $auctionRepository
+        private readonly AuctionRepository $auctionRepository,
+        private readonly EventBus $eventBus
     ) {}
 
     public function __invoke(CreateBidCommand $command): void
@@ -41,6 +43,6 @@ final class CreateBidCommandHandler implements CommandHandler
         $auction->addBid($bid);
         $this->auctionRepository->update($auction);
 
-        // TODO event to notify all auction users that bidded
+        $this->eventBus->publish(...$auction->pullEvents());
     }
 }

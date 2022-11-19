@@ -23,7 +23,7 @@ services:
     App\UI\Subscriber\ExceptionHandlerSubscriber:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
-    
+
 
     # Tag instances
     # -------------
@@ -34,6 +34,9 @@ services:
 
         App\Shared\Domain\Bus\Command\CommandHandler:
             tags: [{ name: messenger.message_handler, bus: command.bus }]
+
+        App\Shared\Domain\Bus\Event\EventSubscriber:
+            tags: [messenger.message_handler]
 
 
     # Interfaces Definitions
@@ -46,3 +49,6 @@ services:
 
     # Services
     # ----------------------
+
+    App\Shared\Domain\Bus\Event\EventBus:
+        class: App\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMQEventBus

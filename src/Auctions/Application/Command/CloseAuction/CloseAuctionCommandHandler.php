@@ -13,13 +13,15 @@ use App\Auctions\Domain\Exception\AuctionNotFoundException;
 use App\Auctions\Domain\Exception\InvalidAuctionStatusException;
 use App\Auctions\Domain\Exception\InvalidBidException;
 use App\Shared\Domain\Bus\Command\CommandHandler;
+use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\ValueObject\Uuid;
 
 final class CloseAuctionCommandHandler implements CommandHandler
 {
     public function __construct(
         private readonly FindAuctionById $findAuctionById,
-        private readonly AuctionRepository $auctionRepository
+        private readonly AuctionRepository $auctionRepository,
+        private readonly EventBus $eventBus
     ) {}
 
     public function __invoke(CloseAuctionCommand $command): void
@@ -42,11 +44,9 @@ final class CloseAuctionCommandHandler implements CommandHandler
             throw new InvalidAuctionStatusException();
         }
 
-        $auction->updateStatus(Auction::STATUS_CLOSED);
-        $auction->updateUpdatedAt($command->closedAt());
-        $bid->updateIsWinner(true);
-        $bid->updateUpdatedAt($command->closedAt());
-
+        $auction->close($bid, $command->closedAt());
         $this->auctionRepository->update($auction);
+
+        $this->eventBus->publish(...$auction->pullEvents());
     }
 }

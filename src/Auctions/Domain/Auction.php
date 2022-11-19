@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Auctions\Domain;
 
+use App\Auctions\Domain\Event\AuctionClosedEvent;
+use App\Auctions\Domain\Event\BidCreatedEvent;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\Aggregate\Timestampable;
 use App\Shared\Domain\ValueObject\Uuid;
@@ -106,6 +108,17 @@ class Auction extends AggregateRoot
         $this->status = $status;
     }
 
+    public function close(AuctionBid $bid, DateTimeImmutable $closedAt): void
+    {
+        $bid->updateIsWinner(true);
+        $bid->updateUpdatedAt($closedAt);
+        $this->updateStatus(self::STATUS_CLOSED);
+        $this->updateUpdatedAt($closedAt);
+        $this->recordEvent(new AuctionClosedEvent(
+            aggregateId: $this->id->value()
+        ));
+    }
+
     public function updateInitialAmount(float $initialAmount): void
     {
         $this->initialAmount = $initialAmount;
@@ -124,6 +137,10 @@ class Auction extends AggregateRoot
     public function addBid(AuctionBid $bid): void
     {
         $this->bids->add($bid);
+        $this->recordEvent(new BidCreatedEvent(
+            aggregateId: $this->id->value(),
+            bidId: $bid->id()->value()
+        ));
     }
 
     public function getBidById(Uuid $id): ?AuctionBid

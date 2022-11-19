@@ -9,12 +9,35 @@ framework:
             command.bus:
                 middleware:
                     - validation
+                    - doctrine_transaction
+
+            event.bus:
+                default_middleware: allow_no_handlers
+                middleware:
+                    - validation
+                    - doctrine_transaction
 
         transports:
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%)'
+                #serializer: messenger.transport.symfony_serializer
+                retry_strategy:
+                    max_retries: 0
+                    delay: 1000
+                options:
+                    exchange:
+                        name: messages
+                        type: direct
+                        default_publish_routing_key: normal
+                    queues:
+                        auctions.domain.bid_created:
+                            binding_keys: [auctions.domain.bid_created]
+                        auctions.domain.auction_closed:
+                            binding_keys: [auctions.domain.auction_closed]
+            sync: 'sync://'
 
         routing:
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            'App\Shared\Domain\Bus\Event\DomainEvent': async
 
 # when@test:
 #    framework:

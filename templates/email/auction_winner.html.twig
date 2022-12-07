@@ -1,0 +1,10 @@
+{% extends 'email/_base.html.twig' %}
+
+{% block content %}
+
+    <p>
+        Hi {{ winning_bid.user.username }},<br>
+        Your bid of <b>{{ winning_bid.amount }} €</b> has been accepted in the auction <b>{{ auction.title }}</b>.
+    </p>
+
+{% endblock %}

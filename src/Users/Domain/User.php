@@ -14,10 +14,10 @@ class User extends AggregateRoot
     use Timestampable;
 
     public function __construct(
-        private Uuid $id,
-        private string $username,
-        private string $email,
-        private string $password,
+        private readonly Uuid $id,
+        private readonly string $username,
+        private readonly string $email,
+        private readonly string $password,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt,
     ) {

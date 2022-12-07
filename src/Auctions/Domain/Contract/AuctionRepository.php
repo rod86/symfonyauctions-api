@@ -14,7 +14,7 @@ interface AuctionRepository
 
     public function update(Auction $auction): void;
 
-    public function findAllAuctions(): AuctionsCollection;
+    public function findAllAuctions(): array;
 
     public function findOneById(Uuid $id): Auction|null; 
 }

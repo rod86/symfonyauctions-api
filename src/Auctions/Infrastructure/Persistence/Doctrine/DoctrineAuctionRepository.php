@@ -27,11 +27,9 @@ class DoctrineAuctionRepository extends DoctrineRepository implements AuctionRep
         $this->updateEntity();
     }
 
-    public function findAllAuctions(): AuctionsCollection
+    public function findAllAuctions(): array
     {
-        $result = $this->repository()->findAll();
-
-        return new AuctionsCollection($result);
+        return $this->repository()->findAll();
     }
 
     public function findOneById(Uuid $id): Auction|null

@@ -1,0 +1,18 @@
+{% extends 'email/_base.html.twig' %}
+
+{% block content %}
+
+    <p>
+        Hi {{ user.username }},</br>
+        Your bid in auction <b>{{ auction.title }}</b> has been outbid.
+    </p>
+
+
+
+    <p>
+        <b>Auction: </b> {{ auction.title }} <br/>
+        <b>Amount: </b> {{ bid.amount }} € <br/>
+        <b>Date: </b>   {{ bid.createdAt|date("d/m/Y H:i") }}
+    </p>
+
+{% endblock %}

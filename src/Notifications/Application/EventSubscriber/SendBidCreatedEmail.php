@@ -42,6 +42,10 @@ final class SendBidCreatedEmail implements EventSubscriber
 
         /** @var User $user */
         foreach ($bidders as $user) {
+            if ($user === $bid->user()) {
+                continue;
+            }
+
             $message = $this->template->render(self::TEMPLATE, [
                 'user' => $user,
                 'auction' => $auction,

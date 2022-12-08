@@ -14,7 +14,7 @@ class AuctionBid
     use Timestampable;
 
     public function __construct(
-        private readonly Uuid $id,
+        private Uuid $id,
         private readonly Auction $auction,
         private readonly User $user,
         private readonly float $amount,

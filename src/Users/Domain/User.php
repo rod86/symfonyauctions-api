@@ -14,7 +14,7 @@ class User extends AggregateRoot
     use Timestampable;
 
     public function __construct(
-        private readonly Uuid $id,
+        private Uuid $id,
         private readonly string $username,
         private readonly string $email,
         private readonly string $password,

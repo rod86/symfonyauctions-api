@@ -75,10 +75,13 @@ final class AuctionBidFixtures extends Fixture implements DependentFixtureInterf
                 $manager->persist($bid);
             }
 
-            // TODO fix winning bid db design
-            /*if ($auction->status() === Auction::STATUS_CLOSED) {
-                $auction->updateWinningBid(end($bids));
-            }*/
+
+            if ($auction->status() === Auction::STATUS_CLOSED) {
+                /** @var AuctionBid $lastBid */
+                $lastBid = end($bids);
+                $closedAt = $lastBid->createdAt()->add(new DateInterval('PT5M'));
+                $auction->close($lastBid, $closedAt);
+            }
 
             $manager->flush();
         }

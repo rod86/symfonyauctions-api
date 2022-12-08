@@ -26,7 +26,7 @@ class Auction extends AggregateRoot
     private Collection $bids;
 
     public function __construct(
-        private readonly Uuid $id,
+        private Uuid $id,
         private readonly User $user,
         private string $title,
         private string $description,

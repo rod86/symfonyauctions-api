@@ -18,4 +18,15 @@ final class Utils
     {
         return new DateTimeImmutable($date);
     }
+
+    public static function extractClassName(string $className): string
+    {
+        $array = explode('\\', $className);
+        return array_pop($array);
+    }
+
+    public static function toSnakeCase(string $value): string
+    {
+        return strtolower(preg_replace(['/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'], '\1_\2', $value));
+    }
 }

@@ -19,12 +19,12 @@ final class UpdateAuctionCommandHandler implements CommandHandler
 
     public function __invoke(UpdateAuctionCommand $command): void
     {
-        $auction = $this->findAuctionById->__invoke(
-            Uuid::fromString($command->id())
-        );
+        $auctionId = Uuid::fromString($command->id());
+
+        $auction = $this->findAuctionById->__invoke($auctionId);
 
         if (!$auction->user()->id()->equals(Uuid::fromString($command->userId()))) {
-            throw new AuctionNotFoundException();
+            throw new AuctionNotFoundException($auctionId);
         }
 
         $auction->updateTitle($command->title());

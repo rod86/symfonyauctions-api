@@ -2,18 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Exception;
+namespace App\UI\Validation;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class ValidationException extends ApiException
+class ValidationException extends HttpException
 {
-    private array $errors = [];
-
-    public function __construct(array $errors = [])
-    {
-        $this->errors = $errors;
-
+    public function __construct(
+        private readonly array $errors = []
+    ) {
         parent::__construct(
             Response::HTTP_PRECONDITION_FAILED,
             'Invalid request data.',

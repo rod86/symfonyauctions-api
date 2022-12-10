@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Auctions\Application\Command\CloseAuction;
 
-use App\Auctions\Domain\Auction;
 use App\Auctions\Domain\Contract\AuctionRepository;
-use App\Auctions\Domain\Contract\BidRepository;
 use App\Auctions\Domain\DomainService\FindAuctionById;
-use App\Auctions\Domain\DomainService\FindBidById;
 use App\Auctions\Domain\Exception\AuctionNotFoundException;
+use App\Auctions\Domain\Exception\BidNotInAuctionException;
 use App\Auctions\Domain\Exception\InvalidAuctionStatusException;
-use App\Auctions\Domain\Exception\InvalidBidException;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\ValueObject\Uuid;
@@ -26,22 +23,23 @@ final class CloseAuctionCommandHandler implements CommandHandler
 
     public function __invoke(CloseAuctionCommand $command): void
     {
-        $auction = $this->findAuctionById->__invoke(
-            Uuid::fromString($command->id())
-        );
+        $auctionId = Uuid::fromString($command->id());
+        $bidId = Uuid::fromString($command->bidId());
+
+        $auction = $this->findAuctionById->__invoke($auctionId);
 
         if (!$auction->user()->id()->equals(Uuid::fromString($command->userId()))) {
-            throw new AuctionNotFoundException();
+            throw new AuctionNotFoundException($auctionId);
         }
 
-        $bid = $auction->getBidById(Uuid::fromString($command->bidId()));
+        $bid = $auction->getBidById($bidId);
 
-        if ($auction->id() !== $bid->auction()->id()) {
-            throw new InvalidBidException('Bid doesnt belong to auction');
+        if ($auctionId !== $bid->auction()->id()) {
+            throw new BidNotInAuctionException($auctionId, $bidId);
         }
 
         if (!$auction->isOpen() || $auction->winningBid()) {
-            throw new InvalidAuctionStatusException();
+            throw new InvalidAuctionStatusException($auctionId);
         }
 
         $auction->close($bid, $command->closedAt());

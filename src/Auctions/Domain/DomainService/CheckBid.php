@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Auctions\Domain\DomainService;
 
 use App\Auctions\Domain\AuctionBid;
+use App\Auctions\Domain\Exception\AuctioneerCannotBidException;
 use App\Auctions\Domain\Exception\AuctionNotAcceptBidsException;
-use App\Auctions\Domain\Exception\InvalidBidException;
+use App\Auctions\Domain\Exception\InvalidBidAmountException;
+use App\Auctions\Domain\Exception\UserOutbidHimselfException;
 
 final class CheckBid
 {
@@ -16,21 +18,21 @@ final class CheckBid
         $lastBid = $bid->auction()->getLastBid();
 
         if (!$auction->isOpen()) {
-            throw new AuctionNotAcceptBidsException();
+            throw new AuctionNotAcceptBidsException($auction->id());
         }
 
         if ($bid->user()->id() === $auction->user()->id()) {
-            throw new InvalidBidException('Auctioneer cannot bid');
+            throw new AuctioneerCannotBidException();
         }
 
         if ($lastBid && $lastBid->user()->id()->equals($bid->user()->id())) {
-            throw new InvalidBidException('User cannot bid after himself');
+            throw new UserOutbidHimselfException();
         }
 
         $latestAmount = $lastBid ? $lastBid->amount() : $auction->initialAmount();
 
         if ($latestAmount >= $bid->amount()) {
-            throw new InvalidBidException('Invalid bid amount');
+            throw new InvalidBidAmountException();
         }
     }
 }

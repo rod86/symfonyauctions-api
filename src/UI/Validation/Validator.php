@@ -25,8 +25,8 @@ final class Validator
         if ($violations->count()) {
             /** @var ConstraintViolationInterface $violation */
             foreach($violations as $violation) {
-                $fieldname = $this->parsePropertyPath($violation->getPropertyPath());
-                $errors[$fieldname] = $violation->getMessage();
+                $fieldName = $this->parsePropertyPath($violation->getPropertyPath());
+                $errors[$fieldName] = $violation->getMessage();
             }
         }
 

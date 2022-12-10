@@ -30,12 +30,15 @@ final class SendBidCreatedEmail implements EventSubscriber
 
     public function __invoke(BidCreatedEvent $event): void
     {
-        $auction = $this->findAuctionById->__invoke(Uuid::fromString($event->aggregateId()));
+        $auctionId = Uuid::fromString($event->aggregateId());
+        $bidId = Uuid::fromString($event->bidId());
 
-        $bid = $auction->getBidById(Uuid::fromString($event->bidId()));
+        $auction = $this->findAuctionById->__invoke($auctionId);
+
+        $bid = $auction->getBidById($bidId);
 
         if ($bid === null) {
-            throw new BidNotInAuctionException();
+            throw new BidNotInAuctionException($auctionId, $bidId);
         }
 
         $bidders = $this->getBiddersByAuction->__invoke($auction);

@@ -17,6 +17,7 @@ security:
             provider: custom_provider
             custom_authenticators:
                 - App\UI\Security\ApiTokenAuthenticator
+            entry_point: App\UI\Security\AuthenticationEntryPoint
 
 
     access_control:

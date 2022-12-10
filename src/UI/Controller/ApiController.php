@@ -9,9 +9,7 @@ use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Query\Query;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\Bus\Query\Response;
-use App\UI\Exception\ApiException;
 use App\UI\Security\SecurityUser;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 abstract class ApiController
@@ -34,9 +32,7 @@ abstract class ApiController
 
     protected function throwApiException(int $statusCode, ?string $message = null, \Throwable $previous = null): void
     {
-        $message = $message ?? HttpResponse::$statusTexts[$statusCode] ?? ''; 
-        
-        throw new ApiException($statusCode, $message, $previous);
+        // TODO remove me
     }
 
     protected function getUser(): ?SecurityUser

@@ -20,7 +20,7 @@ final class FindAuctionById
         $auction = $this->auctionRepository->findOneById($id);
 
         if ($auction === null) {
-            throw new AuctionNotFoundException();
+            throw new AuctionNotFoundException($id);
         }
 
         return $auction;

@@ -4,10 +4,17 @@ declare(strict_types=1);
 
 namespace App\Users\Domain\Exception;
 
-class InvalidPasswordException extends \Exception
+use App\Shared\Domain\DomainException;
+
+class InvalidPasswordException extends DomainException
 {
-    public function __construct()
+    public function errorCode(): string
     {
-        parent::__construct('Invalid password.');
+        return 'invalid_password';
+    }
+
+    public function errorMessage(): string
+    {
+        return 'Invalid password.';
     }
 }

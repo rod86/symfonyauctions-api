@@ -4,10 +4,17 @@ declare(strict_types=1);
 
 namespace App\Users\Domain\Exception;
 
-class UserNotFoundException extends \Exception
+use App\Shared\Domain\DomainException;
+
+class UserNotFoundException extends DomainException
 {
-    public function __construct()
+    public function errorCode(): string
     {
-        parent::__construct('User not found');
+        return 'user_not_found';
+    }
+
+    public function errorMessage(): string
+    {
+        return 'User not found.';
     }
 }

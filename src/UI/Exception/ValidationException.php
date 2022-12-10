@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Validation;
+namespace App\UI\Exception;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;

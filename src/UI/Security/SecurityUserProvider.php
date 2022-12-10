@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class SecurityUserProvider implements UserProviderInterface
 {
     public function __construct(
-        private UserRepository $userRepository 
+        private readonly UserRepository $userRepository
     ) {}
 
     public function supportsClass(string $class): bool

@@ -4,16 +4,9 @@ declare(strict_types=1);
 
 namespace App\UI\Subscriber;
 
-use App\Auctions\Domain\Exception\AuctioneerCannotBidException;
-use App\Auctions\Domain\Exception\AuctionNotAcceptBidsException;
-use App\Auctions\Domain\Exception\AuctionNotFoundException;
-use App\Auctions\Domain\Exception\BidNotInAuctionException;
-use App\Auctions\Domain\Exception\InvalidAuctionStatusException;
-use App\Auctions\Domain\Exception\InvalidBidAmountException;
-use App\Auctions\Domain\Exception\UserOutbidHimselfException;
 use App\Shared\Domain\DomainException;
 use App\Shared\Utils;
-use App\UI\Validation\ValidationException;
+use App\UI\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -21,16 +14,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final class ApiExceptionListener
 {
-    private const EXCEPTIONS = [
-        // Auctions
-        AuctioneerCannotBidException::class => Response::HTTP_PRECONDITION_FAILED,
-        AuctionNotAcceptBidsException::class => Response::HTTP_PRECONDITION_FAILED,
-        AuctionNotFoundException::class => Response::HTTP_NOT_FOUND,
-        BidNotInAuctionException::class => Response::HTTP_NOT_FOUND,
-        InvalidAuctionStatusException::class => Response::HTTP_PRECONDITION_FAILED,
-        InvalidBidAmountException::class => Response::HTTP_PRECONDITION_FAILED,
-        UserOutbidHimselfException::class => Response::HTTP_PRECONDITION_FAILED
-    ];
+    public function __construct(
+        private readonly ExceptionHttpStatusCodeMapper $exceptionHttpStatusCodeMapper
+    ) {}
 
     public function onKernelException(ExceptionEvent $event): void
     {
@@ -60,9 +46,9 @@ final class ApiExceptionListener
 
     private function getStatusCode(\Throwable $exception): int
     {
-        if ($exception instanceof DomainException) {
-            $statusCode = self::EXCEPTIONS[$exception::class] ?? null;
-        } elseif ($exception instanceof HttpException) {
+        $statusCode = $this->exceptionHttpStatusCodeMapper->getStatusCodeFor($exception::class);
+
+        if ($statusCode === null && $exception instanceof HttpException) {
             $statusCode = $exception->getStatusCode();
         }
 

@@ -11,6 +11,7 @@ use App\Users\Domain\Exception\InvalidPasswordException;
 use App\Users\Domain\Exception\UserNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 final class AuthController extends ApiController
 {
@@ -24,9 +25,10 @@ final class AuthController extends ApiController
                 plainPassword: $data['password']
             ));
         } catch (UserNotFoundException|InvalidPasswordException $exception) {
-            $this->throwApiException(
-                Response::HTTP_UNAUTHORIZED,
-                'Invalid username and/or password'
+            throw new UnauthorizedHttpException(
+                challenge: 'Bearer',
+                message: 'Invalid username and/or password',
+                previous: $exception
             );
         }
 

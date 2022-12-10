@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\UI\Request;
 
+use App\UI\Exception\ValidationException;
 use App\UI\Validation\Validator;
-use App\UI\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints as Assert;
 

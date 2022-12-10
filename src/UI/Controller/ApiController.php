@@ -30,11 +30,6 @@ abstract class ApiController
         $this->commandBus->dispatch($command);
     }
 
-    protected function throwApiException(int $statusCode, ?string $message = null, \Throwable $previous = null): void
-    {
-        // TODO remove me
-    }
-
     protected function getUser(): ?SecurityUser
     {
         $token = $this->tokenStorage->getToken();

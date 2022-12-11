@@ -16,3 +16,9 @@
 !.vscode/launch.json
 /nbproject/private/
 .DS_Store
+coverage
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+
+###< phpunit/phpunit ###

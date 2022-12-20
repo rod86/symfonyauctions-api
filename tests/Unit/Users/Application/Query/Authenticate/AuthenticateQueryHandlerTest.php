@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Users\Application\Query\Authenticate;
-
-use App\Shared\Domain\Bus\Query\Response;
 use App\Tests\Unit\Shared\Domain\FakeValueGenerator;
+use App\Tests\Unit\Users\Application\Query\Authenticate\AuthenticateQueryMother;
 use App\Tests\Unit\Users\Domain\Contract\ApiTokenEncoderMock;
 use App\Tests\Unit\Users\Domain\Contract\PasswordHasherMock;
 use App\Tests\Unit\Users\Domain\Contract\UserRepositoryMock;

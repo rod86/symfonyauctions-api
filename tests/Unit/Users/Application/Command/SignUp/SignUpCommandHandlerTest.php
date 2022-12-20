@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Users\Application\Command\SignUp;
-
 use App\Tests\Unit\Shared\Domain\FakeValueGenerator;
+use App\Tests\Unit\Users\Application\Command\SignUp\SignUpCommandMother;
 use App\Tests\Unit\Users\Domain\Contract\PasswordHasherMock;
 use App\Tests\Unit\Users\Domain\Contract\UserRepositoryMock;
 use App\Tests\Unit\Users\Domain\UserMother;

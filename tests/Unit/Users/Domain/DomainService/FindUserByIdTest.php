@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Users\Domain\DomainService;
-
 use App\Tests\Unit\Users\Domain\Contract\UserRepositoryMock;
 use App\Tests\Unit\Users\Domain\UserMother;
 use App\Users\Domain\DomainService\FindUserById;
 use App\Users\Domain\Exception\UserNotFoundException;
-use App\Users\Domain\User;
 
 beforeEach(function () {
     $this->userRepositoryMock = new UserRepositoryMock($this);

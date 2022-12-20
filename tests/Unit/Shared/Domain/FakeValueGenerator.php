@@ -11,6 +11,8 @@ use Faker\Generator;
 
 final class FakeValueGenerator
 {
+    private const MAX_INT = 2147483647;
+
     private static ?Generator $faker;
 
     private static function generator(): Generator
@@ -61,5 +63,10 @@ final class FakeValueGenerator
     public static function token(): string
     {
         return self::generator()->sha256();
+    }
+
+    public static function integer(int $min = 0, int $max = self::MAX_INT): int
+    {
+        return self::generator()->numberBetween($min, $max);
     }
 }

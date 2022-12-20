@@ -4,128 +4,87 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Users\Application\Query\Authenticate;
 
-use App\UI\Fixture\Factory\UserFactory;
-use App\Users\Application\Query\Authenticate\AuthenticateQuery;
+use App\Shared\Domain\Bus\Query\Response;
+use App\Tests\Unit\Shared\Domain\FakeValueGenerator;
+use App\Tests\Unit\Users\Domain\Contract\ApiTokenEncoderMock;
+use App\Tests\Unit\Users\Domain\Contract\PasswordHasherMock;
+use App\Tests\Unit\Users\Domain\Contract\UserRepositoryMock;
+use App\Tests\Unit\Users\Domain\UserMother;
 use App\Users\Application\Query\Authenticate\AuthenticateQueryHandler;
 use App\Users\Application\Query\Authenticate\AuthenticateResponse;
-use App\Users\Domain\Contract\ApiTokenEncoder;
-use App\Users\Domain\Contract\PasswordHasher;
-use App\Users\Domain\Contract\UserRepository;
 use App\Users\Domain\Exception\InvalidPasswordException;
 use App\Users\Domain\Exception\UserNotFoundException;
-use App\Users\Domain\User;
 
 beforeEach(function () {
-    $this->userRepositoryMock = $this->getMockBuilder(UserRepository::class)
-        ->disableOriginalConstructor()
-        ->getMock();
-
-    $this->passwordHasherMock = $this->getMockBuilder(PasswordHasher::class)
-        ->disableOriginalConstructor()
-        ->getMock();
-
-    $this->apiTokenEncoderMock = $this->getMockBuilder(ApiTokenEncoder::class)
-        ->disableOriginalConstructor()
-        ->getMock();
+    $this->userRepositoryMock = new UserRepositoryMock($this);
+    $this->passwordHasherMock = new PasswordHasherMock($this);
+    $this->apiTokenEncoderMock = new ApiTokenEncoderMock($this);
 });
 
 it('Returns a token', function () {
-    /** @var User $user */
-    $user = UserFactory::new()->createOne();
-    $plainPassword = '123456';
-    $jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-    $response = new AuthenticateResponse([
-        'token' => $jwtToken
-    ]);
-
-    $this->userRepositoryMock
-        ->expects($this->once())
-        ->method('findUserByUsernameOrEmail')
-        ->with($user->username(), $user->username())
-        ->willReturn($user);
-
-    $this->passwordHasherMock
-        ->expects($this->once())
-        ->method('verify')
-        ->with($user->password(), $plainPassword)
-        ->willReturn(true);
-
-    $this->apiTokenEncoderMock
-        ->expects($this->once())
-        ->method('encode')
-        ->with(['id' => $user->id()->value()])
-        ->willReturn($jwtToken);
-
-    $handler = new AuthenticateQueryHandler(
-        userRepository: $this->userRepositoryMock,
-        passwordHasher: $this->passwordHasherMock,
-        apiTokenEncoder: $this->apiTokenEncoderMock
+    $plainPassword = FakeValueGenerator::plainPassword();
+    $user = UserMother::create(
+        password: FakeValueGenerator::password($plainPassword)
     );
 
-    $result = $handler->__invoke(new AuthenticateQuery(
-        username: $user->username(),
-        plainPassword: $plainPassword
-    ));
+    $query = AuthenticateQueryMother::create($user->username(), $plainPassword);
+    $token = FakeValueGenerator::token();
+    $response = new AuthenticateResponse([
+        'token' => $token
+    ]);
 
-    expect($result)->toEqual($response);
+    $this->userRepositoryMock->shouldFindUserByUsername($query->username(), $query->username(), $user);
+    $this->passwordHasherMock->shouldVerify($user->password(), $plainPassword, true);
+    $this->apiTokenEncoderMock->shouldEncode(['id' => $user->id()->value()], $token);
+
+    $handler = new AuthenticateQueryHandler(
+        userRepository: $this->userRepositoryMock->getMock(),
+        passwordHasher: $this->passwordHasherMock->getMock(),
+        apiTokenEncoder: $this->apiTokenEncoderMock->getMock()
+    );
+
+    $result = $handler->__invoke($query);
+
+    expect($result)->toBeQueryResponse($response->data());
 });
 
 it('throws error if user not found', function () {
-    /** @var User $user */
-    $user = UserFactory::new()->createOne();
-    $plainPassword = '123456';
-
-    $this->userRepositoryMock
-        ->expects($this->once())
-        ->method('findUserByUsernameOrEmail')
-        ->with($user->username(), $user->username())
-        ->willReturn(null);
-
-    $this->passwordHasherMock
-        ->expects($this->never())
-        ->method('verify');
-
-    $handler = new AuthenticateQueryHandler(
-        userRepository: $this->userRepositoryMock,
-        passwordHasher: $this->passwordHasherMock,
-        apiTokenEncoder: $this->apiTokenEncoderMock
+    $plainPassword = FakeValueGenerator::plainPassword();
+    $user = UserMother::create(
+        password: FakeValueGenerator::password($plainPassword)
     );
 
-    $handler->__invoke(new AuthenticateQuery(
-        username: $user->username(),
-        plainPassword: $plainPassword
-    ));
+    $query = AuthenticateQueryMother::create($user->username(), $plainPassword);
+
+    $this->userRepositoryMock->shouldNotFindUserByUsername($query->username(), $query->username());
+    $this->passwordHasherMock->shouldNotCallVerify();
+
+    $handler = new AuthenticateQueryHandler(
+        userRepository: $this->userRepositoryMock->getMock(),
+        passwordHasher: $this->passwordHasherMock->getMock(),
+        apiTokenEncoder: $this->apiTokenEncoderMock->getMock()
+    );
+
+    $handler->__invoke($query);
 })->throws(UserNotFoundException::class);
 
 it('throws error if password is invalid', function () {
-    /** @var User $user */
-    $user = UserFactory::new()->createOne();
-    $plainPassword = '123456';
-
-    $this->userRepositoryMock
-        ->expects($this->once())
-        ->method('findUserByUsernameOrEmail')
-        ->with($user->username(), $user->username())
-        ->willReturn($user);
-
-    $this->passwordHasherMock
-        ->expects($this->once())
-        ->method('verify')
-        ->with($user->password(), $plainPassword)
-        ->willReturn(false);
-
-    $this->apiTokenEncoderMock
-        ->expects($this->never())
-        ->method('encode');
-
-    $handler = new AuthenticateQueryHandler(
-        userRepository: $this->userRepositoryMock,
-        passwordHasher: $this->passwordHasherMock,
-        apiTokenEncoder: $this->apiTokenEncoderMock
+    $plainPassword = FakeValueGenerator::plainPassword();
+    $user = UserMother::create(
+        password: FakeValueGenerator::password($plainPassword)
     );
 
-    $handler->__invoke(new AuthenticateQuery(
-        username: $user->username(),
-        plainPassword: $plainPassword
-    ));
+    $query = AuthenticateQueryMother::create($user->username(), $plainPassword);
+
+    $this->userRepositoryMock->shouldFindUserByUsername($query->username(), $query->username(), $user);
+    $this->passwordHasherMock->shouldVerifyFail($user->password(), $plainPassword);
+    $this->apiTokenEncoderMock->shouldNotCallEncode();
+
+    $handler = new AuthenticateQueryHandler(
+        userRepository: $this->userRepositoryMock->getMock(),
+        passwordHasher: $this->passwordHasherMock->getMock(),
+        apiTokenEncoder: $this->apiTokenEncoderMock->getMock()
+    );
+
+    $handler->__invoke($query);
 })->throws(InvalidPasswordException::class);

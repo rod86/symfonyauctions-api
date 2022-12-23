@@ -69,4 +69,14 @@ final class FakeValueGenerator
     {
         return self::generator()->numberBetween($min, $max);
     }
+
+    public static function float(int $min = 0, int $max = null, int $decimals = 2): float
+    {
+        return self::generator()->randomFloat($decimals, $min, $max);
+    }
+
+    public static function randomElement(array $options)
+    {
+        return self::generator()->randomElement($options);
+    }
 }

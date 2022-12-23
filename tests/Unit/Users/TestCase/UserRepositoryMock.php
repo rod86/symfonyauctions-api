@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Users\Domain\Contract;
+namespace App\Tests\Unit\Users\TestCase;
 
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Tests\Unit\Shared\Infrastructure\Testing\AbstractMock;
@@ -19,7 +19,7 @@ final class UserRepositoryMock extends AbstractMock
     public function shouldFindUserByUsername(string $username, string $email, User $user): void
     {
         $this->mock
-            ->expects($this->testCase->once())
+            ->expects($this->once())
             ->method('findUserByUsernameOrEmail')
             ->with($username, $email)
             ->willReturn($user);
@@ -28,7 +28,7 @@ final class UserRepositoryMock extends AbstractMock
     public function shouldNotFindUserByUsername(string $username, string $email): void
     {
         $this->mock
-            ->expects($this->testCase->once())
+            ->expects($this->once())
             ->method('findUserByUsernameOrEmail')
             ->with($username, $email)
             ->willReturn(null);
@@ -37,7 +37,7 @@ final class UserRepositoryMock extends AbstractMock
     public function shouldCreate(User $user): void
     {
         $this->mock
-            ->expects($this->testCase->once())
+            ->expects($this->once())
             ->method('create')
             ->with($user);
     }
@@ -45,7 +45,7 @@ final class UserRepositoryMock extends AbstractMock
     public function shouldFindUserById(Uuid $id, User $user): void
     {
         $this->mock
-            ->expects($this->testCase->once())
+            ->expects($this->once())
             ->method('findById')
             ->with($id)
             ->willReturn($user);
@@ -54,7 +54,7 @@ final class UserRepositoryMock extends AbstractMock
     public function shouldNotFindUserById(Uuid $id): void
     {
         $this->mock
-            ->expects($this->testCase->once())
+            ->expects($this->once())
             ->method('findById')
             ->with($id)
             ->willReturn(null);

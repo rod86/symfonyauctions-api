@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Tests\Unit\Users\Domain\Contract\UserRepositoryMock;
 use App\Tests\Unit\Users\Domain\UserMother;
+use App\Tests\Unit\Users\TestCase\UserRepositoryMock;
 use App\Users\Domain\DomainService\FindUserById;
 use App\Users\Domain\Exception\UserNotFoundException;
 

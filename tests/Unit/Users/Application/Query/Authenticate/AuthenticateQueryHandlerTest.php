@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 use App\Tests\Unit\Shared\Domain\FakeValueGenerator;
 use App\Tests\Unit\Users\Application\Query\Authenticate\AuthenticateQueryMother;
-use App\Tests\Unit\Users\Domain\Contract\ApiTokenEncoderMock;
-use App\Tests\Unit\Users\Domain\Contract\PasswordHasherMock;
-use App\Tests\Unit\Users\Domain\Contract\UserRepositoryMock;
 use App\Tests\Unit\Users\Domain\UserMother;
+use App\Tests\Unit\Users\TestCase\ApiTokenEncoderMock;
+use App\Tests\Unit\Users\TestCase\PasswordHasherMock;
+use App\Tests\Unit\Users\TestCase\UserRepositoryMock;
 use App\Users\Application\Query\Authenticate\AuthenticateQueryHandler;
 use App\Users\Application\Query\Authenticate\AuthenticateResponse;
 use App\Users\Domain\Exception\InvalidPasswordException;

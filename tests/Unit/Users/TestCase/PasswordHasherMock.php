@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Users\Domain\Contract;
+namespace App\Tests\Unit\Users\TestCase;
 
 use App\Tests\Unit\Shared\Infrastructure\Testing\AbstractMock;
 use App\Users\Domain\Contract\PasswordHasher;
@@ -17,7 +17,7 @@ final class PasswordHasherMock extends AbstractMock
     public function shouldVerify(string $hashedPassword, string $plainPassword, bool $result): void
     {
         $this->mock
-            ->expects($this->testCase->once())
+            ->expects($this->once())
             ->method('verify')
             ->with($hashedPassword, $plainPassword)
             ->willReturn(true);
@@ -26,7 +26,7 @@ final class PasswordHasherMock extends AbstractMock
     public function shouldVerifyFail(string $hashedPassword, string $plainPassword): void
     {
         $this->mock
-            ->expects($this->testCase->once())
+            ->expects($this->once())
             ->method('verify')
             ->with($hashedPassword, $plainPassword)
             ->willReturn(false);
@@ -35,14 +35,14 @@ final class PasswordHasherMock extends AbstractMock
     public function shouldNotCallVerify(): void
     {
         $this->mock
-            ->expects($this->testCase->never())
+            ->expects($this->never())
             ->method('verify');
     }
 
     public function shouldHash(string $plainPassword, string $hash): void
     {
         $this->mock
-            ->expects($this->testCase->once())
+            ->expects($this->once())
             ->method('hash')
             ->with($plainPassword)
             ->willReturn($hash);
@@ -51,7 +51,7 @@ final class PasswordHasherMock extends AbstractMock
     public function shouldNotCallHash(): void
     {
         $this->mock
-            ->expects($this->testCase->never())
+            ->expects($this->never())
             ->method('hash');
     }
 }

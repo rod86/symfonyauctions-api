@@ -6,7 +6,6 @@ use App\Auctions\Application\Query\FindAuctionById\FindAuctionByIdQuery;
 use App\Auctions\Application\Query\FindAuctionById\FindAuctionByIdQueryHandler;
 use App\Auctions\Application\Query\FindAuctionById\FindAuctionByIdResponse;
 use App\Tests\Unit\Auctions\Domain\AuctionMother;
-use App\Tests\Unit\Auctions\Domain\DomainService\FindAuctionByIdMock;
 
 beforeEach(function () {
     $this->findAuctionById = null;//new FindAuctionByIdMock($this);

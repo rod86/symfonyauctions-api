@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 use App\Tests\Unit\Shared\Domain\FakeValueGenerator;
 use App\Tests\Unit\Users\Application\Command\SignUp\SignUpCommandMother;
-use App\Tests\Unit\Users\Domain\Contract\PasswordHasherMock;
-use App\Tests\Unit\Users\Domain\Contract\UserRepositoryMock;
 use App\Tests\Unit\Users\Domain\UserMother;
+use App\Tests\Unit\Users\TestCase\PasswordHasherMock;
+use App\Tests\Unit\Users\TestCase\UserRepositoryMock;
 use App\Users\Application\Command\SignUp\SignUpCommandHandler;
 use App\Users\Domain\Exception\UserAlreadyExistsException;
 

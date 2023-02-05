@@ -16,7 +16,7 @@ final class FindAuctionByIdMock extends AbstractMock
         return FindAuctionById::class;
     }
 
-    public function shouldReturnUser(Uuid $id, Auction $auction): void
+    public function shouldReturnAuction(Uuid $id, Auction $auction): void
     {
         $this->mock
             ->expects($this->once())

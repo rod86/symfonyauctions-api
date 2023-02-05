@@ -28,14 +28,19 @@ final class AuctionMother
             user: $user ?? UserMother::create(),
             title: $title ?? FakeValueGenerator::string(),
             description: $description ?? FakeValueGenerator::text(),
-            status: $status ?? FakeValueGenerator::randomElement([
-                Auction::STATUS_CLOSED,
-                Auction::STATUS_DRAFT,
-                Auction::STATUS_ENABLED
-            ]),
+            status: $status ?? self::randomStatus(),
             initialAmount: $initialAmount ?? FakeValueGenerator::float(100, 10000),
             createdAt: $createdAt ?? FakeValueGenerator::dateTime(),
             updatedAt: $updatedAt ?? FakeValueGenerator::dateTime()
         );
+    }
+
+    public static function randomStatus(): string
+    {
+       return FakeValueGenerator::randomElement([
+           Auction::STATUS_DRAFT,
+           Auction::STATUS_ENABLED,
+           Auction::STATUS_CLOSED,
+       ]);
     }
 }

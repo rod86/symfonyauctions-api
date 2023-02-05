@@ -14,7 +14,11 @@ final class BidCreatedEvent extends DomainEvent
         string $eventId = null,
         string $occurredOn = null
     ) {
-        parent::__construct($aggregateId, $eventId, $occurredOn);
+        parent::__construct(
+            aggregateId: $aggregateId,
+            eventId: $eventId,
+            occurredOn: $occurredOn
+        );
     }
 
     public static function eventType(): string

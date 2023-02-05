@@ -79,4 +79,9 @@ final class FakeValueGenerator
     {
         return self::generator()->randomElement($options);
     }
+
+    public static function boolean(): bool
+    {
+        return self::generator()->boolean();
+    }
 }

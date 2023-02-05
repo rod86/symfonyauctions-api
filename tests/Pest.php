@@ -11,7 +11,11 @@
 |
 */
 
-// uses(Tests\TestCase::class)->in('Feature');
+uses()
+    ->beforeAll(function () {
+        // Disable final in unit test scope only
+        DG\BypassFinals::enable();
+    })->in('Unit');
 
 /*
 |--------------------------------------------------------------------------

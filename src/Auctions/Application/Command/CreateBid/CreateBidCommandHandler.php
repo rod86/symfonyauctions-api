@@ -30,7 +30,7 @@ final class CreateBidCommandHandler implements CommandHandler
         $auction = $this->findAuctionById->__invoke(Uuid::fromString($command->auctionId()));
 
         $bid = AuctionBid::create(
-            Uuid::random(),
+            Uuid::fromString($command->id()),
             $auction,
             $user,
             $command->amount(),

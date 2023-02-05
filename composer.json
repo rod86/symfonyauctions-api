@@ -50,7 +50,10 @@
     "autoload-dev": {
         "psr-4": {
             "App\\Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "tests/functions.php"
+        ]
     },
     "replace": {
         "symfony/polyfill-ctype": "*",
@@ -80,6 +83,7 @@
         }
     },
     "require-dev": {
+        "dg/bypass-finals": "^1.4",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "fakerphp/faker": "^1.20",
         "pestphp/pest": "^1.22",

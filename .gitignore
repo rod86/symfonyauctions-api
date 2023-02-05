@@ -1,5 +1,4 @@
 
-###> symfony/framework-bundle ###
 .env
 .env.*
 !.env.sample
@@ -7,7 +6,7 @@
 /public/bundles/
 /var/
 /vendor/
-###< symfony/framework-bundle ###
+coverage/
 
 
 # IDE

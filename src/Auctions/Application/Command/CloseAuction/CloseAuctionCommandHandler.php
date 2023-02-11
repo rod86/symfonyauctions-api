@@ -34,7 +34,7 @@ final class CloseAuctionCommandHandler implements CommandHandler
 
         $bid = $auction->getBidById($bidId);
 
-        if ($auctionId !== $bid->auction()->id()) {
+        if (!$bid || !$auctionId->equals($bid->auction()->id())) {
             throw new BidNotInAuctionException($auctionId, $bidId);
         }
 

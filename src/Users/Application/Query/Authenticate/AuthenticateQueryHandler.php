@@ -10,7 +10,6 @@ use App\Users\Domain\Contract\UserRepository;
 use App\Users\Domain\Contract\ApiTokenEncoder;
 use App\Users\Domain\Exception\UserNotFoundException;
 use App\Users\Domain\Exception\InvalidPasswordException;
-use App\Users\Application\Query\Authenticate\AuthenticateQuery;
 
 class AuthenticateQueryHandler implements QueryHandler
 {

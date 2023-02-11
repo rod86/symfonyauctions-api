@@ -14,11 +14,11 @@ final class UpdateAuctionCommandMother
 {
     public static function create(
         string $id = null,
-        string $userId = null,
         string $title = null,
         string $description = null,
         float $initialAmount = null,
         string $status = null,
+        string $userId = null,
         DateTimeImmutable $updatedAt = null
     ): UpdateAuctionCommand {
         return new UpdateAuctionCommand(

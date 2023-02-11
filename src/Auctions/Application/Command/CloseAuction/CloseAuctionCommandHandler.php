@@ -34,9 +34,7 @@ final class CloseAuctionCommandHandler implements CommandHandler
 
         $bid = $auction->getBidById($bidId);
 
-        // TODO ERROR: if $bid is null, error "call auction() on null value" in next if
-
-        if (!$auctionId->equals($bid->auction()->id())) {
+        if (!$bid || !$auctionId->equals($bid->auction()->id())) {
             throw new BidNotInAuctionException($auctionId, $bidId);
         }
 

@@ -67,6 +67,24 @@ it('should throw error if user is not auction owner', function () {
     $handler->__invoke($command);
 })->throws(AuctionNotFoundException::class);
 
+it('should throw error if bid is not found', function () {
+    $auction = AuctionMother::create();
+    $command = CloseAuctionCommandMother::create(
+        id: $auction->id()->value(),
+        bidId: FakeValueGenerator::uuid()->value(),
+        userId: $auction->user()->id()->value(),
+    );
+
+    $this->findAuctionByIdMock->shouldReturnAuction($auction->id(), $auction);
+
+    $handler = new CloseAuctionCommandHandler(
+        findAuctionById: $this->findAuctionByIdMock->getMock(),
+        auctionRepository: $this->auctionRepositoryMock->getMock(),
+        eventBus: $this->eventBusMock->getMock()
+    );
+    $handler->__invoke($command);
+})->throws(BidNotInAuctionException::class);
+
 it('should throw error if bid doesn\'t belong to auction', function () {
     $auction = AuctionMother::create(status: Auction::STATUS_ENABLED);
     $winningBid = AuctionBidMother::create();
